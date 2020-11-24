@@ -1,0 +1,93 @@
+﻿<UserControl x:Class="BloodPlus.pageSrc.ResponderNotifyDonor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BloodPlus.pageSrc"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+                TextElement.FontWeight="Regular"
+                TextElement.FontSize="13"
+                TextOptions.TextFormattingMode="Ideal" 
+                TextOptions.TextRenderingMode="Auto"        
+                FontFamily="{DynamicResource MaterialDesignFont}"
+             
+             mc:Ignorable="d" 
+              d:DesignHeight="432" d:DesignWidth="1003">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Card.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.DialogHost.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.75*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Frame ClipToBounds="True">
+            <Frame.Content>
+                <Image Source="/BloodPlus;component/assets/mobileBlood.png" Margin="-87,48,87,-48"/>
+            </Frame.Content>
+        </Frame>
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Label Content="Select Criteria" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="45" Opacity="0.5"/>
+
+            <materialDesign:Card Grid.Row="1" Margin="80,40,80,40" UniformCornerRadius="9">
+                <ComboBox x:Name="cboxBloodType" Style="{StaticResource MaterialDesignComboBox}" 
+                          Margin="8,8,16,8">
+                    <materialDesign:HintAssist.Hint>
+                        <Label Content="Blood Type" FontSize="25"/>
+                    </materialDesign:HintAssist.Hint>
+                    <ComboBoxItem>
+                        AB-
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        B-
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        AB+
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        A-
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        O-
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        B+
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        A+
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        O+
+                    </ComboBoxItem>
+                </ComboBox>
+            </materialDesign:Card>
+
+            <Button Grid.Row="2" Height="75" Margin="150,0,150,0" 
+                    materialDesign:ButtonAssist.CornerRadius="15" 
+                    BorderBrush="Transparent" Background="Red"
+                    x:Name="btnSendNotification" Click="btnSendNotificationClick">
+                <Button.Content>
+                    <Label FontSize="25" Content="Send Notification" 
+                           Foreground="White" Opacity="0.75"/>
+                </Button.Content>
+            </Button>
+        </Grid>
+    </Grid>
+</UserControl>

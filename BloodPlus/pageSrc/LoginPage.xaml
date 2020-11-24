@@ -1,0 +1,450 @@
+﻿<UserControl x:Class="BloodPlus.pageSrc.LoginPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BloodPlus.pageSrc"
+             
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+                TextElement.FontWeight="Regular"
+                TextElement.FontSize="13"
+                TextOptions.TextFormattingMode="Ideal" 
+                TextOptions.TextRenderingMode="Auto"        
+                FontFamily="{DynamicResource MaterialDesignFont}"
+             
+             mc:Ignorable="d" 
+             d:DesignHeight="560" d:DesignWidth="1024">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Card.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.DialogHost.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <materialDesign:Transitioner Name="Transitioner" SelectedIndex="0" AutoApplyTransitionOrigins="True" SelectionChanged="TransitionerSelectionChanged">
+        <!-- Login Slide -->
+        <materialDesign:TransitionerSlide OpeningEffect="{materialDesign:TransitionEffect Kind=SlideInFromBottom,Duration=0:0:0.75}">
+            <materialDesign:TransitionerSlide.BackwardWipe>
+                <materialDesign:SlideOutWipe/>
+            </materialDesign:TransitionerSlide.BackwardWipe>
+
+            <materialDesign:TransitionerSlide.ForwardWipe>
+                <materialDesign:SlideOutWipe/>
+            </materialDesign:TransitionerSlide.ForwardWipe>
+            
+            <!-- Slide -->
+            <Grid ClipToBounds="True" Background="White">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="325"/>
+                    <ColumnDefinition Width="25"/>
+                </Grid.ColumnDefinitions>
+
+                <Frame Grid.Column="0" Grid.ColumnSpan="1" ClipToBounds="True">
+                    <Frame.Content>
+                        <Grid>
+                            <Image x:Name="imgHeart" Source="/BloodPlus;component/assets/handBlood.png" Margin="211,256,-78,-87"/>
+                            <Image Source="/BloodPlus;component/assets/personFlaskBlood.png" Margin="10,-90,316,49"/>
+                            <!--<Image Source="/BloodPlus;component/assets/login_background.jpg" Stretch="UniformToFill"/>-->
+                        </Grid>
+                    </Frame.Content>
+                </Frame>
+
+                
+
+                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                    <Image Source="/BloodPlus;component/assets/bloodplusLogo.png" Margin="80,0,80,25"/>
+                    
+                    <materialDesign:Card Grid.Column="1" Margin="18,0,18,0" Height="300" UniformCornerRadius="9">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="75"/>
+                                <RowDefinition Height="1*"/>
+                            </Grid.RowDefinitions>
+
+                            <Frame ClipToBounds="True">
+                                <Frame.Content>
+                                    <Label Content="Login" FontSize="20" Margin="8" VerticalAlignment="Bottom" HorizontalAlignment="Center" FontFamily="Segoe UI" Opacity="0.60"/>
+                                </Frame.Content>
+                            </Frame>
+
+                            <Grid Grid.Row="1" Margin="15">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="0.75*"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBox x:Name="tboxPhoneNumber" Grid.Row="0" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" Margin="15" materialDesign:HintAssist.Hint="Phone Number"/>
+                                <PasswordBox x:Name="tboxPassword" Grid.Row="1" Style="{StaticResource MaterialDesignOutlinedPasswordFieldPasswordBox}" Margin="15" materialDesign:HintAssist.Hint="Password"/>
+                                <Button x:Name="btnLogin" Grid.Row="2" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonAssist.CornerRadius="15" Height="40" Width="150"
+                            Content="Login" BorderBrush="Transparent" Background="White" Foreground="#A5000000" Click="btnLoginClick"/>
+                            </Grid>
+                        </Grid>
+                    </materialDesign:Card>
+                    <Label Content="Register Account" HorizontalAlignment="Center" Height="35" VerticalContentAlignment="Bottom" MouseDown="registerAccountClicked">
+                        <Label.Style>
+                            <Style TargetType="{x:Type Label}">
+                                <Setter Property="Foreground" Value="#7F000000"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Foreground" Value="Red"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                    <Label Content="Are you a responder?" HorizontalAlignment="Center" Height="25" VerticalContentAlignment="Center" Background="#00000000" MouseDown="goToResponderLoginClick">
+                        <Label.Style>
+                            <Style TargetType="{x:Type Label}">
+                                <Setter Property="Foreground" Value="#7F000000"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Foreground" Value="Red"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                </StackPanel>
+            </Grid>
+        </materialDesign:TransitionerSlide>
+
+
+
+
+        <!-- Register Slide -->
+        <materialDesign:TransitionerSlide OpeningEffect="{materialDesign:TransitionEffect Kind=SlideInFromBottom,Duration=0:0:0.75}">
+            <materialDesign:TransitionerSlide.BackwardWipe>
+                <materialDesign:SlideOutWipe/>
+            </materialDesign:TransitionerSlide.BackwardWipe>
+
+            <materialDesign:TransitionerSlide.ForwardWipe>
+                <materialDesign:SlideOutWipe/>
+            </materialDesign:TransitionerSlide.ForwardWipe>
+
+            <!-- Slide -->
+            <Grid ClipToBounds="True" Background="White">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="650"/>
+                    <ColumnDefinition Width="12"/>
+                </Grid.ColumnDefinitions>
+
+                <Frame Grid.Column="0" ClipToBounds="True">
+                    <Frame.Content>
+                        <Grid>
+                            <Image Source="/BloodPlus;component/assets/personFlaskBlood.png" Margin="10,20,22,51"/>
+                        </Grid>
+                    </Frame.Content>
+                </Frame>
+
+                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                    <materialDesign:Card Grid.Column="1" Margin="18,0,18,0" Height="490" UniformCornerRadius="9">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="75"/>
+                                <RowDefinition Height="1*"/>
+                            </Grid.RowDefinitions>
+
+                            <Frame ClipToBounds="True">
+                                <Frame.Content>
+                                    <Label Content="Sign Up" FontSize="32" Margin="8" VerticalAlignment="Bottom" HorizontalAlignment="Center" FontFamily="Segoe UI" Opacity="0.60"/>
+                                </Frame.Content>
+                            </Frame>
+
+                            <Grid Grid.Row="1" Margin="15">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBox x:Name="tboxRegNama" Grid.Row="0" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" Margin="15" materialDesign:HintAssist.Hint="Nama"/>
+                                <Grid Grid.Row="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="0.25*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox x:Name="tboxRegAlamat" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" Margin="15" materialDesign:HintAssist.Hint="Alamat" IsEnabled="False"/>
+                                    <Viewbox Grid.Column="1" Margin="0,0,16,0">
+                                        <Button x:Name="btnMap" Style="{StaticResource MaterialDesignFloatingActionButton}" Click="mapSearchClick">
+                                            <materialDesign:PackIcon Kind="MapSearch" Height="28" Width="28" />
+                                        </Button>
+                                    </Viewbox>
+                                </Grid>
+                                <Grid Grid.Row="1" Grid.Column="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <ComboBox x:Name="tboxRegJenisKelamin" materialDesign:HintAssist.Hint="Jenis Kelamin" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="15,15,7,15">
+                                        <ComboBoxItem>
+                                            Laki-laki
+                                        </ComboBoxItem>
+                                        <ComboBoxItem>
+                                            Perempuan
+                                        </ComboBoxItem>
+                                    </ComboBox>
+
+                                    <ComboBox x:Name="tboxRegGolDar" materialDesign:HintAssist.Hint="Golongan Darah" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Grid.Column="1" Margin="7,15,15,15">
+                                        <ComboBoxItem>
+                                            AB-
+                                        </ComboBoxItem>
+                                        <ComboBoxItem>
+                                            B-
+                                        </ComboBoxItem>
+                                        <ComboBoxItem>
+                                            AB+
+                                        </ComboBoxItem>
+                                        <ComboBoxItem>
+                                            A-
+                                        </ComboBoxItem>
+                                        <ComboBoxItem>
+                                            O-
+                                        </ComboBoxItem>
+                                        <ComboBoxItem>
+                                            B+
+                                        </ComboBoxItem>
+                                        <ComboBoxItem>
+                                            A+
+                                        </ComboBoxItem>
+                                        <ComboBoxItem>
+                                            O+
+                                        </ComboBoxItem>
+                                    </ComboBox>
+                                </Grid>
+                                <TextBox x:Name="tboxRegNomorTelepon" Grid.Row="2" Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" Margin="15" materialDesign:HintAssist.Hint="Nomor Telepon"/>
+                                <TextBox x:Name="tboxRegTinggiBadan" Grid.Row="0" Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" Margin="15" materialDesign:HintAssist.Hint="Tinggi Badan"/>
+                                <TextBox x:Name="tboxRegBeratBadan" Grid.Row="3" Grid.Column="0" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" Margin="15" materialDesign:HintAssist.Hint="Berat Badan"/>
+                                <TextBox x:Name="tboxRegUmur" Grid.Row="2" Grid.Column="0" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" Margin="15" materialDesign:HintAssist.Hint="Umur"/>
+                                <PasswordBox x:Name="tboxRegPassword" Grid.Row="3" Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedPasswordFieldPasswordBox}" Margin="15" materialDesign:HintAssist.Hint="Password"/>
+                                <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonAssist.CornerRadius="15" Height="40" Width="150"
+                            Content="Register" BorderBrush="Transparent" Background="White" Foreground="#A5000000" Click="btnRegisterClick"/>
+                            </Grid>
+                        </Grid>
+                    </materialDesign:Card>
+                    <Label Content="Log In" HorizontalAlignment="Center" Height="35" VerticalContentAlignment="Bottom" MouseDown="loginClicked">
+                        <Label.Style>
+                            <Style TargetType="{x:Type Label}">
+                                <Setter Property="Foreground" Value="#7F000000"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Foreground" Value="Red"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                    <Label Content="Are you a responder?" HorizontalAlignment="Center" Height="25" VerticalContentAlignment="Center" Background="#00000000" MouseDown="goToResponderRegisterClick">
+                        <Label.Style>
+                            <Style TargetType="{x:Type Label}">
+                                <Setter Property="Foreground" Value="#7F000000"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Foreground" Value="Red"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                </StackPanel>
+            </Grid>
+        </materialDesign:TransitionerSlide>
+
+        <!-- Login Responder Slide -->
+        <materialDesign:TransitionerSlide OpeningEffect="{materialDesign:TransitionEffect Kind=SlideInFromBottom,Duration=0:0:0.75}">
+            <materialDesign:TransitionerSlide.BackwardWipe>
+                <materialDesign:SlideOutWipe/>
+            </materialDesign:TransitionerSlide.BackwardWipe>
+
+            <materialDesign:TransitionerSlide.ForwardWipe>
+                <materialDesign:SlideOutWipe/>
+            </materialDesign:TransitionerSlide.ForwardWipe>
+
+            <!-- Slide -->
+            <Grid ClipToBounds="True" Background="White">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="325"/>
+                    <ColumnDefinition Width="25"/>
+                </Grid.ColumnDefinitions>
+
+                <Frame Grid.Column="0" ClipToBounds="True">
+                    <Frame.Content>
+                        <Grid>
+                            <Image Source="/BloodPlus;component/assets/hospital.png" Margin="25"/>
+                        </Grid>
+                    </Frame.Content>
+                </Frame>
+
+                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                    <Image Source="/BloodPlus;component/assets/bloodplusLogo.png" Margin="80,0,80,25"/>
+                    
+                    <materialDesign:Card Grid.Column="1" Margin="18,0,18,0" Height="300" UniformCornerRadius="9">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="75"/>
+                                <RowDefinition Height="1*"/>
+                            </Grid.RowDefinitions>
+
+                            <Frame ClipToBounds="True">
+                                <Frame.Content>
+                                    <Label Content="Login" FontSize="20" Margin="8" VerticalAlignment="Bottom" HorizontalAlignment="Center" FontFamily="Segoe UI" Opacity="0.60"/>
+                                </Frame.Content>
+                            </Frame>
+
+                            <Grid Grid.Row="1" Margin="15">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="0.75*"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBox x:Name="tboxRespPhoneNumber" Grid.Row="0" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" Margin="15" materialDesign:HintAssist.Hint="Phone Number"/>
+                                <PasswordBox x:Name="tboxRespPassword" Grid.Row="1" Style="{StaticResource MaterialDesignOutlinedPasswordFieldPasswordBox}" Margin="15" materialDesign:HintAssist.Hint="Password"/>
+                                <Button x:Name="btnRespLogin" Grid.Row="2" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonAssist.CornerRadius="15" Height="40" Width="150"
+                            Content="Login" BorderBrush="Transparent" Background="White" Foreground="#A5000000" Click="btnLoginClick"/>
+                            </Grid>
+                        </Grid>
+                    </materialDesign:Card>
+                    <Label Content="Register Account" HorizontalAlignment="Center" Height="35" VerticalContentAlignment="Bottom" MouseDown="registerRespAccountClicked">
+                        <Label.Style>
+                            <Style TargetType="{x:Type Label}">
+                                <Setter Property="Foreground" Value="#7F000000"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Foreground" Value="Red"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                    <Label Content="Are you a donor?" HorizontalAlignment="Center" Height="25" VerticalContentAlignment="Center" Background="#00000000" MouseDown="loginClicked">
+                        <Label.Style>
+                            <Style TargetType="{x:Type Label}">
+                                <Setter Property="Foreground" Value="#7F000000"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Foreground" Value="Red"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                </StackPanel>
+            </Grid>
+        </materialDesign:TransitionerSlide>
+
+        <!-- Register Responder Slide -->
+        <materialDesign:TransitionerSlide OpeningEffect="{materialDesign:TransitionEffect Kind=SlideInFromBottom,Duration=0:0:0.75}">
+            <materialDesign:TransitionerSlide.BackwardWipe>
+                <materialDesign:SlideOutWipe/>
+            </materialDesign:TransitionerSlide.BackwardWipe>
+
+            <materialDesign:TransitionerSlide.ForwardWipe>
+                <materialDesign:SlideOutWipe/>
+            </materialDesign:TransitionerSlide.ForwardWipe>
+
+            <!-- Slide -->
+            <Grid ClipToBounds="True" Background="White">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="350"/>
+                    <ColumnDefinition Width="12"/>
+                </Grid.ColumnDefinitions>
+
+                <Frame Grid.Column="0" ClipToBounds="True">
+                    <Frame.Content>
+                        <Grid>
+                            <Image Source="/BloodPlus;component/assets/hospital.png" Margin="10,20,22,51"/>
+                        </Grid>
+                    </Frame.Content>
+                </Frame>
+
+                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                    <materialDesign:Card Grid.Column="1" Margin="18,0,18,0" Height="490" UniformCornerRadius="9">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="75"/>
+                                <RowDefinition Height="1*"/>
+                            </Grid.RowDefinitions>
+
+                            <Frame ClipToBounds="True">
+                                <Frame.Content>
+                                    <Label Content="Sign Up" FontSize="32" Margin="8" VerticalAlignment="Bottom" HorizontalAlignment="Center" FontFamily="Segoe UI" Opacity="0.60"/>
+                                </Frame.Content>
+                            </Frame>
+
+                            <Grid Grid.Row="1" Margin="15">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <TextBox x:Name="tboxRegRespNama" Grid.Row="0" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" Margin="15" materialDesign:HintAssist.Hint="Nama"/>
+                                <Grid Grid.Row="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="0.25*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox x:Name="tboxRegRespAlamat" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" Margin="15" materialDesign:HintAssist.Hint="Alamat" IsEnabled="False"/>
+                                    <Viewbox Grid.Column="1" Margin="0,0,16,0">
+                                        <Button x:Name="btnMapResp" Style="{StaticResource MaterialDesignFloatingActionButton}" Click="mapSearchClick">
+                                            <materialDesign:PackIcon Kind="MapSearch" Height="28" Width="28" />
+                                        </Button>
+                                    </Viewbox>
+                                </Grid>
+                                <TextBox x:Name="tboxRegRespNomorTelepon" Grid.Row="2" Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}" Margin="15" materialDesign:HintAssist.Hint="Nomor Telepon"/>
+
+
+
+                                <PasswordBox x:Name="tboxRegRespPassword" Grid.Row="3" Style="{StaticResource MaterialDesignOutlinedPasswordFieldPasswordBox}" Margin="15" materialDesign:HintAssist.Hint="Password"/>
+                                <Button Grid.Row="4" Grid.Column="0" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonAssist.CornerRadius="15" Height="40" Width="150"
+                            Content="Register" BorderBrush="Transparent" Background="White" Foreground="#A5000000" Click="btnRegisterRespClick"/>
+                            </Grid>
+                        </Grid>
+                    </materialDesign:Card>
+                    <Label Content="Log In" HorizontalAlignment="Center" Height="35" VerticalContentAlignment="Bottom" MouseDown="loginClicked">
+                        <Label.Style>
+                            <Style TargetType="{x:Type Label}">
+                                <Setter Property="Foreground" Value="#7F000000"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Foreground" Value="Red"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                    <Label Content="Are you a donor?" HorizontalAlignment="Center" Height="25" VerticalContentAlignment="Center" Background="#00000000" MouseDown="registerAccountClicked">
+                        <Label.Style>
+                            <Style TargetType="{x:Type Label}">
+                                <Setter Property="Foreground" Value="#7F000000"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Foreground" Value="Red"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                </StackPanel>
+            </Grid>
+        </materialDesign:TransitionerSlide>
+    </materialDesign:Transitioner>
+</UserControl>

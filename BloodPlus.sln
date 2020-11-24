@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30621.155
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BloodPlus", "BloodPlus\BloodPlus.csproj", "{BED57D90-221F-4824-9E06-4E80C025EACA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Debug2|Any CPU = Debug2|Any CPU
+		Debug2|x64 = Debug2|x64
+		Debug2|x86 = Debug2|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BED57D90-221F-4824-9E06-4E80C025EACA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BED57D90-221F-4824-9E06-4E80C025EACA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BED57D90-221F-4824-9E06-4E80C025EACA}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BED57D90-221F-4824-9E06-4E80C025EACA}.Debug|x64.Build.0 = Debug|Any CPU
+		{BED57D90-221F-4824-9E06-4E80C025EACA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BED57D90-221F-4824-9E06-4E80C025EACA}.Debug|x86.Build.0 = Debug|Any CPU
+		{BED57D90-221F-4824-9E06-4E80C025EACA}.Debug2|Any CPU.ActiveCfg = Debug2|Any CPU
+		{BED57D90-221F-4824-9E06-4E80C025EACA}.Debug2|Any CPU.Build.0 = Debug2|Any CPU
+		{BED57D90-221F-4824-9E06-4E80C025EACA}.Debug2|x64.ActiveCfg = Debug2|x64
+		{BED57D90-221F-4824-9E06-4E80C025EACA}.Debug2|x64.Build.0 = Debug2|x64
+		{BED57D90-221F-4824-9E06-4E80C025EACA}.Debug2|x86.ActiveCfg = Debug2|x86
+		{BED57D90-221F-4824-9E06-4E80C025EACA}.Debug2|x86.Build.0 = Debug2|x86
+		{BED57D90-221F-4824-9E06-4E80C025EACA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BED57D90-221F-4824-9E06-4E80C025EACA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BED57D90-221F-4824-9E06-4E80C025EACA}.Release|x64.ActiveCfg = Release|Any CPU
+		{BED57D90-221F-4824-9E06-4E80C025EACA}.Release|x64.Build.0 = Release|Any CPU
+		{BED57D90-221F-4824-9E06-4E80C025EACA}.Release|x86.ActiveCfg = Release|x86
+		{BED57D90-221F-4824-9E06-4E80C025EACA}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {758C12C7-508A-40FD-9968-83EB4E09BB0E}
+	EndGlobalSection
+EndGlobal

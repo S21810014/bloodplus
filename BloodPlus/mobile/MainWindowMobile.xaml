@@ -1,0 +1,73 @@
+﻿<Window x:Class="BloodPlus.mobile.MainWindowMobile"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BloodPlus.mobile"
+        
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+                TextElement.FontWeight="Regular"
+                TextElement.FontSize="13"
+                TextOptions.TextFormattingMode="Ideal" 
+                TextOptions.TextRenderingMode="Auto"        
+                FontFamily="{DynamicResource MaterialDesignFont}"
+        
+        mc:Ignorable="d"
+        Title="MainWindowMobile" Height="720" Width="405">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Card.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.DialogHost.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="75"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <materialDesign:ColorZone Grid.Row="0" Height="75" materialDesign:ShadowAssist.ShadowDepth="Depth2" materialDesign:ShadowAssist.ShadowEdges="All" Background="#FFA1A1" Mode="Accent">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="75"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="75"/>
+                </Grid.ColumnDefinitions>
+                <Frame x:Name="hamburger" VerticalAlignment="Center" HorizontalAlignment="Center" MouseDown="hamburgerClick" Background="#00000000">
+                    <Frame.Content>
+                        <materialDesign:PackIcon Kind="Menu" Height="45" Width="45" Opacity="0.5"/>
+                    </Frame.Content>
+                </Frame>
+            </Grid>
+        </materialDesign:ColorZone>
+
+        <Grid x:Name="contentPage"  Grid.Row="1">
+            <Button Click="yellHello" Content="HEllo"/>
+        </Grid>
+        <Frame x:Name="sidebarOutArea" Grid.Row="1" Background="Black" Opacity="0.25" Visibility="Hidden"/>
+        <materialDesign:Card x:Name="sidebar" Grid.Row="1" Width="250" Margin="-250,0,0,0" HorizontalAlignment="Left">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.375*"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="0.175*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.75*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Row="1" Grid.ColumnSpan="2">
+                    <Label/>
+                </StackPanel>
+            </Grid>
+        </materialDesign:Card>
+
+    </Grid>
+</Window>

@@ -1,0 +1,13 @@
+﻿<Window x:Class="BloodPlus.pageSrc.MapWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:wpf="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
+        xmlns:local="clr-namespace:BloodPlus.pageSrc"
+        mc:Ignorable="d"
+        Title="MapWindow" Height="600" Width="800">
+    <Grid>
+        <wpf:ChromiumWebBrowser x:Name="Browser" Address="file:///nagabiru/pizzaTaruSemangka.html"/>
+    </Grid>
+</Window>

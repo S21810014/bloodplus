@@ -1,0 +1,132 @@
+﻿<UserControl x:Class="BloodPlus.pageSrc.HistoryPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BloodPlus.pageSrc"
+             
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+                TextElement.FontWeight="Regular"
+                TextElement.FontSize="13"
+                TextOptions.TextFormattingMode="Ideal" 
+                TextOptions.TextRenderingMode="Auto"        
+                FontFamily="{DynamicResource MaterialDesignFont}"
+             
+             mc:Ignorable="d" 
+              d:DesignHeight="432" d:DesignWidth="1003">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Card.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.DialogHost.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <materialDesign:Card UniformCornerRadius="9" materialDesign:ShadowAssist.ShadowDepth="Depth0" Background="#FFEDEDED">
+            <!--<DataGrid   x:Name="datagridHistory"
+                        CanUserAddRows="False" AutoGenerateColumns="False"
+                        HeadersVisibility="All" SelectedCellsChanged="transaction_datagrid_selectedcellchanged"
+                        materialDesign:DataGridAssist.CornerRadius="9">
+                <DataGrid.Columns>
+                    <DataGridTextColumn
+                        Header="Responder"
+                        Width="*"
+                        ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                        Binding="{Binding responder}"
+                        IsReadOnly="True"/>
+                    <DataGridTextColumn
+                        Header="Address"
+                        Width="*"
+                        ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                        Binding="{Binding alamat}"
+                        IsReadOnly="True"/>
+                    <DataGridTextColumn
+                        Header="Date"
+                        Width="*"
+                        ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                        Binding="{Binding tanggal}"
+                        IsReadOnly="True"/>
+                </DataGrid.Columns>
+                <DataGrid.Items>
+                    <MenuItem>
+                        <MenuItem Header="responder" Name="testing"></MenuItem>
+                    </MenuItem>
+                    <MenuItem>
+                        <MenuItem Header="responder" Name="testing"></MenuItem>
+                    </MenuItem>
+                    <MenuItem>
+                        <MenuItem Header="responder" Name="testing"></MenuItem>
+                    </MenuItem>
+                </DataGrid.Items>
+            </DataGrid>-->
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Responder" VerticalAlignment="Center" FontSize="18" Opacity="0.45" FontWeight="SemiBold" Margin="15,0,0,0"/>
+                    <Label Content="Address" VerticalAlignment="Center" FontSize="18" Opacity="0.45" FontWeight="SemiBold" Margin="15,0,0,0" Grid.Column="1"/>
+                    <Label Content="Date" VerticalAlignment="Center" FontSize="18" Opacity="0.45" FontWeight="SemiBold" Margin="15,0,0,0" Grid.Column="2"/>
+                    <Frame Background="Black" Opacity="0.65" Height="2" VerticalAlignment="Bottom" Grid.ColumnSpan="3"/>
+                </Grid>
+
+                <ScrollViewer Grid.Row="1" Style="{StaticResource MaterialDesignScrollViewer}" materialDesign:ScrollViewerAssist.IsAutoHideEnabled="True">
+                    <StackPanel x:Name="historyList" Margin="0,0,-15,0">
+                        <materialDesign:Card Height="65" Margin="8,8,24,8" UniformCornerRadius="9" Grid.ColumnSpan="3">
+                            <Grid Margin="-8,0,-24,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.5*"/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Content="RS Unklab" Margin="16,8,8,8" VerticalAlignment="Center" FontSize="20"/>
+                                <Label Content="Airmadidi, Sulawesi Utara, Indonesia" Margin="16,8,8,8" VerticalAlignment="Center" FontSize="20" Grid.Column="1"/>
+                                <Label Content="11-09-2020" Margin="16,8,8,8" VerticalAlignment="Center" FontSize="20" Grid.Column="2"/>
+                            </Grid>
+                        </materialDesign:Card>
+                        <materialDesign:Card Height="65" Margin="8,8,24,8" UniformCornerRadius="9" Grid.ColumnSpan="3">
+                            <Grid Margin="-8,0,-24,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.5*"/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Content="RS Unklab" Margin="16,8,8,8" VerticalAlignment="Center" FontSize="20"/>
+                                <Label Content="Airmadidi, Sulawesi Utara, Indonesia" Margin="16,8,8,8" VerticalAlignment="Center" FontSize="20" Grid.Column="1"/>
+                                <Label Content="17-08-2020" Margin="16,8,8,8" VerticalAlignment="Center" FontSize="20" Grid.Column="2"/>
+                            </Grid>
+                        </materialDesign:Card>
+                        <materialDesign:Card Height="65" Margin="8,8,24,8" UniformCornerRadius="9" Grid.ColumnSpan="3">
+                            <Grid Margin="-8,0,-24,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.5*"/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Content="RS Unsrat" Margin="16,8,8,8" VerticalAlignment="Center" FontSize="20"/>
+                                <Label Content="Manado, Sulawesi Utara, Indonesia" Margin="16,8,8,8" VerticalAlignment="Center" FontSize="20" Grid.Column="1"/>
+                                <Label Content="22-03-2020" Margin="16,8,8,8" VerticalAlignment="Center" FontSize="20" Grid.Column="2"/>
+                            </Grid>
+                        </materialDesign:Card>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+        </materialDesign:Card>
+    </Grid>
+</UserControl>
