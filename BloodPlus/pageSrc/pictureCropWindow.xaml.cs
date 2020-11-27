@@ -56,7 +56,7 @@ namespace BloodPlus.pageSrc
         {
             if (e.Delta > 0)
             {
-                if (finalRect.X + finalRect.Width < fullBitmap.PixelWidth)
+                if (finalRect.X + finalRect.Width + 10 < fullBitmap.PixelWidth)
                 {
                     finalRect.Width += 10;
                 }
@@ -66,7 +66,7 @@ namespace BloodPlus.pageSrc
                     finalRect.Width += 10;
                 }
 
-                if (finalRect.Y + finalRect.Height < fullBitmap.PixelHeight)
+                if (finalRect.Y + finalRect.Height + 10 < fullBitmap.PixelHeight)
                 {
                     finalRect.Height += 10;
                 }
@@ -96,6 +96,27 @@ namespace BloodPlus.pageSrc
                 }
             }
 
+            if(finalRect.X < 0)
+            {
+                finalRect.X = 0;
+            }
+
+            if (finalRect.Y < 0)
+            {
+                finalRect.Y = 0;
+            }
+
+            if(finalRect.Width > fullBitmap.PixelWidth)
+            {
+                finalRect.Width = fullBitmap.PixelWidth;
+            }
+
+            if (finalRect.Height > fullBitmap.PixelHeight)
+            {
+                finalRect.Height = fullBitmap.PixelHeight;
+            }
+
+
             img.Source = new CroppedBitmap(fullBitmap, finalRect);
         }
 
@@ -104,8 +125,8 @@ namespace BloodPlus.pageSrc
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 currPoint = e.GetPosition(imgFrameContent);
-                finalRect.X += (int)(currPoint - prevPoint).X;
-                finalRect.Y += (int)(currPoint - prevPoint).Y;
+                finalRect.X -= (int)(currPoint - prevPoint).X;
+                finalRect.Y -= (int)(currPoint - prevPoint).Y;
 
                 if (finalRect.X < 0) finalRect.X = 0;
                 if (finalRect.Y < 0) finalRect.Y = 0;
