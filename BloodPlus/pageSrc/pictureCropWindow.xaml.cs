@@ -56,44 +56,53 @@ namespace BloodPlus.pageSrc
         {
             if (e.Delta > 0)
             {
-                if (finalRect.X + finalRect.Width + 10 < fullBitmap.PixelWidth)
+                if (finalRect.X + finalRect.Width + 10 < fullBitmap.PixelWidth && finalRect.Y + finalRect.Height + 10 < fullBitmap.PixelHeight)
                 {
                     finalRect.Width += 10;
-                }
-                else
+                    finalRect.Height += 10;
+                } else if (finalRect.X + finalRect.Width + 10 > fullBitmap.PixelWidth && finalRect.Height <= finalRect.Width)
                 {
                     finalRect.X -= 10;
-                    finalRect.Width += 10;
-                }
-
-                if (finalRect.Y + finalRect.Height + 10 < fullBitmap.PixelHeight)
-                {
-                    finalRect.Height += 10;
-                }
-                else
-                {
                     finalRect.Y -= 10;
+                    finalRect.Width += 10;
                     finalRect.Height += 10;
                 }
+                //else
+                //{
+                //    finalRect.X -= 10;
+                //    finalRect.Width += 10;
+                //}
+
+                //if (finalRect.Y + finalRect.Height + 10 < fullBitmap.PixelHeight)
+                //{
+                //    finalRect.Height += 10;
+                //}
+                //else
+                //{
+                //    finalRect.Y -= 10;
+                //    finalRect.Height += 10;
+                //}
             }
             else
             {
                 if (finalRect.Width > 10)
                 {
                     finalRect.Width -= 10;
-                }
-                else
-                {
-                    finalRect.Width = 10;
-                }
-                if (finalRect.Height > 10)
-                {
                     finalRect.Height -= 10;
                 }
                 else
                 {
+                    finalRect.Width = 10;
                     finalRect.Height = 10;
                 }
+                //if (finalRect.Height > 10)
+                //{
+                //    finalRect.Height -= 10;
+                //}
+                //else
+                //{
+                //    finalRect.Height = 10;
+                //}
             }
 
             if(finalRect.X < 0)
