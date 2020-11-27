@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,6 +30,19 @@ namespace BloodPlus.pageSrc
             this.changePanel = changePanel;
             txtName.Content = userData["nama"] as string;
             txtBloodType.Content = userData["tipe_darah"] as string;
+
+            if(userData.ContainsKey("profilePic"))
+            {
+                MemoryStream ms = new MemoryStream(Convert.FromBase64String(userData["profilePic"] as string));
+
+                BitmapImage bm = new BitmapImage();
+
+                bm.BeginInit();
+                bm.StreamSource = ms;
+                bm.EndInit();
+
+                profileImg.Source = bm;
+            }
         }
 
         private void profileMoreInformationClick(object sender, RoutedEventArgs e)

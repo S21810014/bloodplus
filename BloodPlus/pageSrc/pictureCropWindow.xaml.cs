@@ -25,13 +25,16 @@ namespace BloodPlus.pageSrc
         Point prevPoint;
 
         BitmapImage fullBitmap;
-        Window info = new Window() { Width = 250, Height = 150 };
-        Label x = new Label() { Content = "X" }, y = new Label() { Content = "Y" }, delta = new Label { Content = "DELTA" };
+        //Window info = new Window() { Width = 250, Height = 150 };
+        //Label x = new Label() { Content = "X" }, y = new Label() { Content = "Y" }, delta = new Label { Content = "DELTA" };
 
-        public pictureCropWindow(string imageFile)
+        Action<TransformedBitmap> changeProfileImg;
+
+        public pictureCropWindow(string imageFile, Action<TransformedBitmap> changeProfileImg)
         {
             InitializeComponent();
 
+            this.changeProfileImg = changeProfileImg;
             //BitmapImage reference = new BitmapImage(new Uri(imageFile));
             //float aspectRatio = reference.PixelWidth / reference.PixelHeight;
 
@@ -45,11 +48,18 @@ namespace BloodPlus.pageSrc
             img.Source = new CroppedBitmap(fullBitmap, finalRect);
 
             //info.Tag = new Dictionary<string, object> { { "X", dragRect.X }, { "Y", dragRect.Y } };
-            info.Content = new StackPanel() { Height = 150 };
-            (info.Content as StackPanel).Children.Add(x);
-            (info.Content as StackPanel).Children.Add(y);
-            (info.Content as StackPanel).Children.Add(delta);
-            info.Show();
+            //info.Content = new StackPanel() { Height = 150 };
+            //(info.Content as StackPanel).Children.Add(x);
+            //(info.Content as StackPanel).Children.Add(y);
+            //(info.Content as StackPanel).Children.Add(delta);
+            //info.Show();
+        }
+
+        private void confirmClick(object sender, RoutedEventArgs e)
+        {
+            CroppedBitmap cb = new CroppedBitmap(fullBitmap, finalRect);
+            changeProfileImg(new TransformedBitmap(cb, new ScaleTransform(150f / cb.PixelWidth, 150f / cb.PixelHeight)));
+            this.Close();
         }
 
         private void imgMouseWheel(object sender, MouseWheelEventArgs e)
@@ -67,21 +77,6 @@ namespace BloodPlus.pageSrc
                     finalRect.Width += 10;
                     finalRect.Height += 10;
                 }
-                //else
-                //{
-                //    finalRect.X -= 10;
-                //    finalRect.Width += 10;
-                //}
-
-                //if (finalRect.Y + finalRect.Height + 10 < fullBitmap.PixelHeight)
-                //{
-                //    finalRect.Height += 10;
-                //}
-                //else
-                //{
-                //    finalRect.Y -= 10;
-                //    finalRect.Height += 10;
-                //}
             }
             else
             {
@@ -95,14 +90,6 @@ namespace BloodPlus.pageSrc
                     finalRect.Width = 10;
                     finalRect.Height = 10;
                 }
-                //if (finalRect.Height > 10)
-                //{
-                //    finalRect.Height -= 10;
-                //}
-                //else
-                //{
-                //    finalRect.Height = 10;
-                //}
             }
 
             if(finalRect.X < 0)
@@ -126,7 +113,8 @@ namespace BloodPlus.pageSrc
             }
 
 
-            img.Source = new CroppedBitmap(fullBitmap, finalRect);
+            CroppedBitmap cb = new CroppedBitmap(fullBitmap, finalRect);
+            img.Source = new TransformedBitmap(cb, new ScaleTransform(100f / cb.PixelWidth, 100f / cb.PixelHeight));
         }
 
         private void imgMouseMove(object sender, MouseEventArgs e)
@@ -142,10 +130,11 @@ namespace BloodPlus.pageSrc
                 if (finalRect.X + finalRect.Width > fullBitmap.PixelWidth) finalRect.X = (int)fullBitmap.PixelWidth - finalRect.Width;
                 if (finalRect.Y + finalRect.Height > fullBitmap.PixelHeight) finalRect.Y = (int)fullBitmap.PixelHeight - finalRect.Height;
 
-                x.Content = $"{currPoint.X - prevPoint.X} - {finalRect.X} - {fullBitmap.PixelWidth}";
-                y.Content = $"{currPoint.Y - prevPoint.Y} - {finalRect.Y} - {fullBitmap.PixelHeight}";
+                //x.Content = $"{currPoint.X - prevPoint.X} - {finalRect.X} - {fullBitmap.PixelWidth}";
+                //y.Content = $"{currPoint.Y - prevPoint.Y} - {finalRect.Y} - {fullBitmap.PixelHeight}";
 
-                img.Source = new CroppedBitmap(fullBitmap, finalRect);
+                CroppedBitmap cb = new CroppedBitmap(fullBitmap, finalRect);
+                img.Source = new TransformedBitmap(cb, new ScaleTransform(100f / cb.PixelWidth, 100f / cb.PixelHeight));
                 prevPoint = currPoint;
             }
             else
@@ -153,6 +142,11 @@ namespace BloodPlus.pageSrc
                 prevPoint = e.GetPosition(imgFrameContent);
                 currPoint = e.GetPosition(imgFrameContent);
             }
+        }
+
+        private void cancelClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 

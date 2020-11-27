@@ -28,7 +28,7 @@
     
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.75*"/>
+            <ColumnDefinition Width="0.50*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
@@ -40,7 +40,7 @@
                 </Grid.RowDefinitions>
 
                 <materialDesign:Card Margin="15" UniformCornerRadius="9" materialDesign:ShadowAssist.ShadowDepth="Depth0" Background="#FFE6E6E6">
-                    <Image Source="/BloodPlus;component/assets/personFlaskBlood.png" Margin="-69,-9,-87,-127"/>
+                    <Image x:Name="imgProfile" Source="/BloodPlus;component/assets/personFlaskBlood.png" Stretch="UniformToFill"/>
                 </materialDesign:Card>
 
                 <Label Grid.Row="1" 

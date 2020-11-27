@@ -71,7 +71,7 @@ namespace BloodPlus.pageSrc
                             new Action(
                                 () =>
                                 {
-                                    changePanel("Dashboard");
+                                    //changePanel("Dashboard");
 
                                     //cek kalo ini responder
                                     if (Transitioner.SelectedIndex == 2)

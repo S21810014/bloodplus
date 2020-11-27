@@ -52,17 +52,18 @@ namespace BloodPlus
         {
             InitializeComponent();
 
-            devPageTester dpt = new devPageTester();
-            dpt.setContent(new pageSrc.ProfilePage(new Dictionary<string, object> {
-                {"nama", "A" },
-                {"alamat", "A" },
-                {"tipe_darah", "A" },
-                {"tinggi_badan", "A" },
-                {"berat_badan", "A" },
-                {"nomor_telepon", "A" },
-            }));
-            dpt.Show();
-            this.Hide();
+            //helper window to debug one page
+            //devPageTester dpt = new devPageTester();
+            //dpt.setContent(new pageSrc.ProfilePage(new Dictionary<string, object> {
+            //    {"nama", "A" },
+            //    {"alamat", "A" },
+            //    {"tipe_darah", "A" },
+            //    {"tinggi_badan", "A" },
+            //    {"berat_badan", "A" },
+            //    {"nomor_telepon", "A" },
+            //}));
+            //dpt.Show();
+            //this.Hide();
 
             //meregister beberapa event handler dari server yang bisa diterima aplikasi
             socket.OnConnected += (object s, EventArgs evt) =>
@@ -86,7 +87,7 @@ namespace BloodPlus
             {
                 socket.ConnectAsync();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -107,109 +108,133 @@ namespace BloodPlus
         /// <param name="callback">fungsi yang akan dipanggil ketika server mengakui informasi login tersebut salah atau benar</param>
         private async void sendLogin(string json, Action<string> callback)
         {
-            await socket.EmitAsync("login", (SocketIOResponse response) =>
+            await socket.EmitAsync("login", async (SocketIOResponse response) =>
             {
                 //response berupa json dalam bentuk string, maka dari itu kita ubah menjadi Dictionary<string, object>
                 Dictionary<string, object> resp = JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(response.ToString())[0];
 
                 //cek kalo response mempunyai key 'resp' bernilai 'valid
-                if (resp["resp"] as string == "Valid") Dispatcher.BeginInvoke(new Action(() =>
+                if (resp["resp"] as string == "Valid")
                 {
-                    txtUpperRightName.Text = $"Hi, {resp["nama"] as string}";
-                    userData = resp;
 
-                    #region setting upper nav items
-                    //check if it's responder whos logging in
-                    if(resp.ContainsKey("responder"))
+                    await Dispatcher.BeginInvoke(new Action(() =>
                     {
-                        upperNavs.Clear();
-                        upperNavGrid.Children.Clear();
-                        
-                        upperNavs["Dashboard"] = new TextBlock()
-                        {
-                            Text = "Dashboard",
-                            VerticalAlignment = VerticalAlignment.Bottom,
-                            HorizontalAlignment = HorizontalAlignment.Center,
-                            Margin = new Thickness(0, 0, 0, 15),
-                            FontWeight = FontWeights.Bold,
-                            Foreground = new SolidColorBrush(Colors.Black),
-                            Opacity = 0.65,
-                        };
-                        Grid.SetColumn(upperNavs["Dashboard"], 1);
+                        txtUpperRightName.Text = $"Hi, {resp["nama"] as string}";
+                        userData = resp;
 
-                        upperNavs["Notify Donors"] = new TextBlock()
+                        #region setting upper nav items
+                        //check if it's responder whos logging in
+                        if (resp.ContainsKey("responder"))
                         {
-                            Text = "Notify Donors",
-                            VerticalAlignment = VerticalAlignment.Bottom,
-                            HorizontalAlignment = HorizontalAlignment.Center,
-                            Margin = new Thickness(0, 0, 0, 15),
-                            FontWeight = FontWeights.Normal,
-                            Foreground = new SolidColorBrush(Colors.Black),
-                            Opacity = 0.65,
-                        };
-                        Grid.SetColumn(upperNavs["Notify Donors"], 2);
+                            upperNavs.Clear();
+                            upperNavGrid.Children.Clear();
 
-                        foreach (TextBlock navs in upperNavs.Values)
-                        {
-                            upperNavGrid.Children.Add(navs);
-                            navs.MouseDown += upperNavClick;
+                            upperNavs["Dashboard"] = new TextBlock()
+                            {
+                                Text = "Dashboard",
+                                VerticalAlignment = VerticalAlignment.Bottom,
+                                HorizontalAlignment = HorizontalAlignment.Center,
+                                Margin = new Thickness(0, 0, 0, 15),
+                                FontWeight = FontWeights.Bold,
+                                Foreground = new SolidColorBrush(Colors.Black),
+                                Opacity = 0.65,
+                            };
+                            Grid.SetColumn(upperNavs["Dashboard"], 1);
+
+                            upperNavs["Notify Donors"] = new TextBlock()
+                            {
+                                Text = "Notify Donors",
+                                VerticalAlignment = VerticalAlignment.Bottom,
+                                HorizontalAlignment = HorizontalAlignment.Center,
+                                Margin = new Thickness(0, 0, 0, 15),
+                                FontWeight = FontWeights.Normal,
+                                Foreground = new SolidColorBrush(Colors.Black),
+                                Opacity = 0.65,
+                            };
+                            Grid.SetColumn(upperNavs["Notify Donors"], 2);
+
+                            foreach (TextBlock navs in upperNavs.Values)
+                            {
+                                upperNavGrid.Children.Add(navs);
+                                navs.MouseDown += upperNavClick;
+                            }
+
+                            panels["Dashboard"] = new pageSrc.ResponderDashboard(changePanel);
+                            panels["Notify Donors"] = new pageSrc.ResponderNotifyDonor(sendNotifDonor, userData);
                         }
+                        else
+                        {
+                            upperNavs.Clear();
+                            upperNavGrid.Children.Clear();
 
-                        panels["Dashboard"] = new pageSrc.ResponderDashboard(changePanel);
-                        panels["Notify Donors"] = new pageSrc.ResponderNotifyDonor(sendNotifDonor, userData);
-                    }
-                    else
+                            upperNavs["Dashboard"] = new TextBlock()
+                            {
+                                Text = "Dashboard",
+                                VerticalAlignment = VerticalAlignment.Bottom,
+                                HorizontalAlignment = HorizontalAlignment.Center,
+                                Margin = new Thickness(0, 0, 0, 15),
+                                FontWeight = FontWeights.Bold,
+                                Foreground = new SolidColorBrush(Colors.Black),
+                                Opacity = 0.65,
+                            };
+                            Grid.SetColumn(upperNavs["Dashboard"], 1);
+
+                            upperNavs["Profile"] = new TextBlock()
+                            {
+                                Text = "Profile",
+                                VerticalAlignment = VerticalAlignment.Bottom,
+                                HorizontalAlignment = HorizontalAlignment.Center,
+                                Margin = new Thickness(0, 0, 0, 15),
+                                FontWeight = FontWeights.Normal,
+                                Foreground = new SolidColorBrush(Colors.Black),
+                                Opacity = 0.65,
+                            };
+                            Grid.SetColumn(upperNavs["Profile"], 2);
+
+                            upperNavs["History"] = new TextBlock()
+                            {
+                                Text = "History",
+                                VerticalAlignment = VerticalAlignment.Bottom,
+                                HorizontalAlignment = HorizontalAlignment.Center,
+                                Margin = new Thickness(0, 0, 0, 15),
+                                FontWeight = FontWeights.Normal,
+                                Foreground = new SolidColorBrush(Colors.Black),
+                                Opacity = 0.65,
+                            };
+                            Grid.SetColumn(upperNavs["History"], 3);
+
+                            foreach (TextBlock navs in upperNavs.Values)
+                            {
+                                upperNavGrid.Children.Add(navs);
+                                navs.MouseDown += upperNavClick;
+                            }
+                        }
+                        #endregion
+                    }));
+
+                    if (!resp.ContainsKey("responder"))
                     {
-                        upperNavs.Clear();
-                        upperNavGrid.Children.Clear();
-
-                        upperNavs["Dashboard"] = new TextBlock()
+                        await socket.EmitAsync("requestProfileJpeg", rsp =>
                         {
-                            Text = "Dashboard",
-                            VerticalAlignment = VerticalAlignment.Bottom,
-                            HorizontalAlignment = HorizontalAlignment.Center,
-                            Margin = new Thickness(0, 0, 0, 15),
-                            FontWeight = FontWeights.Bold,
-                            Foreground = new SolidColorBrush(Colors.Black),
-                            Opacity = 0.65,
-                        };
-                        Grid.SetColumn(upperNavs["Dashboard"], 1);
+                            Console.WriteLine("during request jpg");
+                            if (rsp.GetValue().Value<string>("retval") == "error")
+                            {
+                                Console.WriteLine("error getting profile pic");
+                            }
+                            else
+                            {
+                                userData["profilePic"] = rsp.GetValue().Value<string>("bytes");
+                            }
 
-                        upperNavs["Profile"] = new TextBlock()
-                        {
-                            Text = "Profile",
-                            VerticalAlignment = VerticalAlignment.Bottom,
-                            HorizontalAlignment = HorizontalAlignment.Center,
-                            Margin = new Thickness(0, 0, 0, 15),
-                            FontWeight = FontWeights.Normal,
-                            Foreground = new SolidColorBrush(Colors.Black),
-                            Opacity = 0.65,
-                        };
-                        Grid.SetColumn(upperNavs["Profile"], 2);
-
-                        upperNavs["History"] = new TextBlock()
-                        {
-                            Text = "History",
-                            VerticalAlignment = VerticalAlignment.Bottom,
-                            HorizontalAlignment = HorizontalAlignment.Center,
-                            Margin = new Thickness(0, 0, 0, 15),
-                            FontWeight = FontWeights.Normal,
-                            Foreground = new SolidColorBrush(Colors.Black),
-                            Opacity = 0.65,
-                        };
-                        Grid.SetColumn(upperNavs["History"], 3);
-
-                        foreach (TextBlock navs in upperNavs.Values)
-                        {
-                            upperNavGrid.Children.Add(navs);
-                            navs.MouseDown += upperNavClick;
-                        }
-
-                        panels["Profile"] = new pageSrc.ProfilePage(resp);
-                        panels["Dashboard"] = new pageSrc.Dashboard(changePanel, resp);
+                            Dispatcher.BeginInvoke(new Action(() =>
+                            {
+                                panels["Profile"] = new pageSrc.ProfilePage(resp, sendProfileJpeg);
+                                panels["Dashboard"] = new pageSrc.Dashboard(changePanel, resp);
+                                changePanel("Dashboard");
+                            }));
+                        }, new { phoneNumber = userData["nomor_telepon"] });
                     }
-                    #endregion
-                }));
+                }
 
                 //send response the one who calls this
                 callback(response.ToString());
@@ -237,15 +262,18 @@ namespace BloodPlus
         private async void sendLogout()
         {
             //just checking if userData actually contains anything
-            if(userData.ContainsKey("id"))
+            if (userData.ContainsKey("id"))
             {
+                userData.Remove("profilePic");
+
                 await socket.EmitAsync("logout", response =>
                 {
                     Console.WriteLine(response);
                     userData.Clear();
 
                 }, JsonConvert.SerializeObject(userData));
-            } else
+            }
+            else
             {
                 throw new Exception("USER DATA NOT EXIST");
             }
@@ -260,6 +288,11 @@ namespace BloodPlus
         private async void sendNotifDonor(string json, Action<string> callback)
         {
             await socket.EmitAsync("responderSendEvent", response => callback(response.ToString()), json);
+        }
+
+        private async void sendProfileJpeg(object imgData, Action<string> callback)
+        {
+            await socket.EmitAsync("getProfileJpeg", response => callback(response.ToString()), imgData);
         }
         #endregion
 
@@ -276,7 +309,7 @@ namespace BloodPlus
             {
                 timers.Add("headerTimer", new util.DoubleTimer() { timer = new System.Timers.Timer(20), value = 0, add = 0.025 });
 
-                if(timers.ContainsKey("headerTimer"))
+                if (timers.ContainsKey("headerTimer"))
                 {
                     timers["headerTimer"].timer.Elapsed += async (object sender, ElapsedEventArgs evt) =>
                     {

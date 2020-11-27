@@ -20,8 +20,8 @@
         </Frame>
 
         <StackPanel Grid.Row="1" VerticalAlignment="Center">
-            <Button Content="Confirm"  Margin="15"/>
-            <Button Content="Cancel" Margin="15"/>
+            <Button Content="Confirm"  Margin="15" Click="confirmClick"/>
+            <Button Content="Cancel" Margin="15" Click="cancelClick"/>
         </StackPanel>
     </Grid>
 </Window>

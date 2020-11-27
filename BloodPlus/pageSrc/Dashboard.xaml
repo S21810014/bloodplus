@@ -58,7 +58,7 @@
                     <materialDesign:Card Height="100" Width="100" UniformCornerRadius="80">
                         <Frame ClipToBounds="True">
                             <Frame.Content>
-                                <Image Source="/BloodPlus;component/assets/personFlaskBlood.png" Margin="-89,0,-103,-140" />
+                                <Image x:Name="profileImg" Source="/BloodPlus;component/assets/personFlaskBlood.png" Stretch="UniformToFill" />
                             </Frame.Content>
                         </Frame>
                     </materialDesign:Card>
