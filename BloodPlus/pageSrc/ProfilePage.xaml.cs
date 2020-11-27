@@ -31,5 +31,20 @@ namespace BloodPlus.pageSrc
             txtWeight.Content = userData["berat_badan"].ToString();
             txtPhoneNumber.Content = userData["nomor_telepon"] as string;
         }
+
+        private void changeProfilePictureClick(object sender, MouseButtonEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog ofd = new Microsoft.Win32.OpenFileDialog();
+            Nullable<bool> result = ofd.ShowDialog();
+
+            if(result == true)
+            {
+                //System.Windows.Forms.MessageBox.Show(ofd.FileName);
+                
+
+                pictureCropWindow pcw = new pictureCropWindow(ofd.FileName);
+                pcw.Show();
+            }
+        }
     }
 }

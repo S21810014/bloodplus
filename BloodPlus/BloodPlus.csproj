@@ -109,6 +109,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -130,6 +131,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="devPageTester.xaml.cs">
+      <DependentUpon>devPageTester.xaml</DependentUpon>
+    </Compile>
     <Compile Include="pageSrc\currentDonorPage.xaml.cs">
       <DependentUpon>currentDonorPage.xaml</DependentUpon>
     </Compile>
@@ -151,6 +155,9 @@
     <Compile Include="pageSrc\MapWindow.xaml.cs">
       <DependentUpon>MapWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="pageSrc\pictureCropWindow.xaml.cs">
+      <DependentUpon>pictureCropWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="pageSrc\ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
@@ -161,6 +168,10 @@
       <DependentUpon>ResponderNotifyDonor.xaml</DependentUpon>
     </Compile>
     <Compile Include="utils.cs" />
+    <Page Include="devPageTester.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="pageSrc\currentDonorPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -206,6 +217,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="pageSrc\MapWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="pageSrc\pictureCropWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

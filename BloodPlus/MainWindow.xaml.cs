@@ -52,6 +52,18 @@ namespace BloodPlus
         {
             InitializeComponent();
 
+            devPageTester dpt = new devPageTester();
+            dpt.setContent(new pageSrc.ProfilePage(new Dictionary<string, object> {
+                {"nama", "A" },
+                {"alamat", "A" },
+                {"tipe_darah", "A" },
+                {"tinggi_badan", "A" },
+                {"berat_badan", "A" },
+                {"nomor_telepon", "A" },
+            }));
+            dpt.Show();
+            this.Hide();
+
             //meregister beberapa event handler dari server yang bisa diterima aplikasi
             socket.OnConnected += (object s, EventArgs evt) =>
             {

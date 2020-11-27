@@ -1,0 +1,27 @@
+﻿<Window x:Class="BloodPlus.pageSrc.pictureCropWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BloodPlus.pageSrc"
+        mc:Ignorable="d"
+        Title="pictureCropWindow" Height="548" Width="395">
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="350"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Frame Grid.Row="0" Height="350" Width="350" ClipToBounds="True">
+            <Frame.Content>
+                <Grid x:Name="imgFrameContent">
+                    <Image x:Name="img" MouseMove="imgMouseMove" Stretch="Fill" MouseWheel="imgMouseWheel"/>
+                </Grid>
+            </Frame.Content>
+        </Frame>
+
+        <StackPanel Grid.Row="1" VerticalAlignment="Center">
+            <Button Content="Confirm"  Margin="15"/>
+            <Button Content="Cancel" Margin="15"/>
+        </StackPanel>
+    </Grid>
+</Window>
