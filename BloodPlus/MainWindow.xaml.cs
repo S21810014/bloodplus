@@ -48,6 +48,14 @@ namespace BloodPlus
         /// </summary>
         Dictionary<string, object> userData { get; set; }
 
+        #region for responder
+        List<Action<SocketIOResponse>> currentDonorListener = new List<Action<SocketIOResponse>>();
+        #endregion
+
+        #region for donor
+        List<Action<SocketIOResponse>> donorHistoryListener = new List<Action<SocketIOResponse>>();
+        #endregion
+
         public MainWindow()
         {
             InitializeComponent();
@@ -72,11 +80,33 @@ namespace BloodPlus
 
                 sock.On("donorNotify", response =>
                 {
+                    Action<SocketIOResponse> acknowledgeNotif = async (rsp) =>
+                    {
+                        Dictionary<string, object> r = JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(rsp.ToString())[0];
+                        r["id_donor"] = userData["id"];
+                        r["nama_donor"] = userData["nama"];
+                        r["donorSocketId"] = sock.Id;
+                        r["status"] = "inprogress";
+                        r["tanggal"] = DateTime.Now.ToString();
+                        r["nomor_telepon_donor"] = userData["nomor_telepon"];
+
+                        await sock.EmitAsync("acknowledgeEvent", r);
+                    };
                     //pattern Dispatcher.BeginInvoke() digunakan untuk menjalankan fungsi seolah-olah fungsi tsb bersumber dari main thread
                     Dispatcher.BeginInvoke(new Action(() =>
                     {
-                        mBox msgbox = new mBox(response.ToString(), 500, 500);
-                        msgbox.Show();
+                        //mBox msgbox = new mBox(response.ToString(), 500, 500);
+                        //msgbox.Show();
+
+                        donorNotificationWindow notifWindow = new donorNotificationWindow(
+                            () => acknowledgeNotif(response),
+                            () => Console.WriteLine("reject"),
+                            response.GetValue().Value<string>("responder"),
+                            response.GetValue().Value<string>("alamat"),
+                            response.GetValue().Value<string>("bloodType")
+                        );
+
+                        notifWindow.Show();
                     }));
                 });
 
@@ -159,8 +189,20 @@ namespace BloodPlus
                                 navs.MouseDown += upperNavClick;
                             }
 
-                            panels["Dashboard"] = new pageSrc.ResponderDashboard(changePanel);
+                            panels["Dashboard"] = new pageSrc.ResponderDashboard(changePanel, currentDonorListener, sendEventDone);
                             panels["Notify Donors"] = new pageSrc.ResponderNotifyDonor(sendNotifDonor, userData);
+                            changePanel("Dashboard");
+
+                            //only add this event handler if it's responder whos logged in
+                            socket.On("responderAcknowledge", rsp =>
+                            {
+                                //this will be sent to table on responder 'current donor'
+                                // will add another later
+                                foreach (Action<SocketIOResponse> a in currentDonorListener)
+                                {
+                                    a(rsp);
+                                }
+                            });
                         }
                         else
                         {
@@ -208,6 +250,14 @@ namespace BloodPlus
                                 upperNavGrid.Children.Add(navs);
                                 navs.MouseDown += upperNavClick;
                             }
+
+                            socket.On("updateHistoryTable", rsp =>
+                            {
+                                foreach(Action<SocketIOResponse> a in donorHistoryListener)
+                                {
+                                    a(rsp);
+                                }
+                            });
                         }
                         #endregion
                     }));
@@ -229,7 +279,7 @@ namespace BloodPlus
                             Dispatcher.BeginInvoke(new Action(() =>
                             {
                                 panels["Profile"] = new pageSrc.ProfilePage(resp, sendProfileJpeg);
-                                panels["Dashboard"] = new pageSrc.Dashboard(changePanel, resp);
+                                panels["Dashboard"] = new pageSrc.Dashboard(changePanel, resp, sendRequestHistoryTable, donorHistoryListener);
                                 changePanel("Dashboard");
                             }));
                         }, new { phoneNumber = userData["nomor_telepon"] });
@@ -293,6 +343,16 @@ namespace BloodPlus
         private async void sendProfileJpeg(object imgData, Action<string> callback)
         {
             await socket.EmitAsync("getProfileJpeg", response => callback(response.ToString()), imgData);
+        }
+        
+        private async void sendEventDone(Dictionary<string, object> rsp, Action<SocketIOResponse> callback)
+        {
+            await socket.EmitAsync("eventDone", response => callback(response), rsp);
+        }
+
+        private async void sendRequestHistoryTable(string idPengguna, Action<SocketIOResponse> callback)
+        {
+            await socket.EmitAsync("requestHistoryTable", response => callback(response), idPengguna);
         }
         #endregion
 

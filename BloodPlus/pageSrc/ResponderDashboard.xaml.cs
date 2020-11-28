@@ -1,4 +1,5 @@
 ﻿using MaterialDesignThemes.Wpf;
+using SocketIOClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,12 +25,12 @@ namespace BloodPlus.pageSrc
         currentDonorPage cdonorPage;
         Action<string> changeParentPanel;
 
-        public ResponderDashboard(Action<string> changeParentPanel)
+        public ResponderDashboard(Action<string> changeParentPanel, List<Action<SocketIOResponse>> currentDonorListener, Action<Dictionary<string, object>, Action<SocketIOResponse>> sendEventDone)
         {
             InitializeComponent();
             this.changeParentPanel = changeParentPanel;
 
-            cdonorPage = new currentDonorPage(changePanel);
+            cdonorPage = new currentDonorPage(changePanel, currentDonorListener, sendEventDone);
             container.Children.Add(cdonorPage);
             cdonorPage.Visibility = Visibility.Hidden;
 

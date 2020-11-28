@@ -37,9 +37,9 @@ namespace BloodPlus.pageSrc
             sendNotifyDonor(
                 JsonConvert.SerializeObject(new Dictionary<string, object> {
                     {"bloodType", (cboxBloodType.SelectedItem as ComboBoxItem).Content },
-                    {"responder", userData["alamat"] },
-                    {"latitude", userData["latitude"] },
-                    {"longitude", userData["longitude"] }
+                    {"responder", userData["nama"] },
+                    {"alamat", userData["alamat"] },
+                    {"id_responder", userData["id"] }
                 }),
                 response =>
                 {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MaterialDesignThemes.Wpf;
+using Newtonsoft.Json;
+using SocketIOClient;
+
 namespace BloodPlus
 {
     /// <summary>
@@ -21,19 +25,30 @@ namespace BloodPlus
     public partial class currentDonorPage : UserControl
     {
         Action<string> changePanel;
+        List<Action<SocketIOResponse>> currentDonorListener;
+        Action<Dictionary<string, object>, Action<SocketIOResponse>> sendEventDone;
 
-        public currentDonorPage(Action<string> changePanel)
+        public currentDonorPage(Action<string> changePanel, List<Action<SocketIOResponse>> currentDonorListener, Action<Dictionary<string, object>, Action<SocketIOResponse>> sendEventDone)
         {
             InitializeComponent();
 
             this.changePanel = changePanel;
+            this.sendEventDone = sendEventDone;
             donorList.Children.Clear();
-            addToList("TESTING", "A");
-            addToList("TESTING", "B");
-            addToList("TESTING", "C");
+            //addToList("TESTING", "A");
+            //addToList("TESTING", "B");
+            //addToList("TESTING", "C");
+
+            currentDonorListener.Add((response) =>
+            {
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    addToList(response);
+                }));
+            });
         }
 
-        private void addToList(string nama, string tipeDarah)
+        private void addToList(SocketIOResponse resp)
         {
             Grid itemContainer = new Grid()
             {
@@ -55,21 +70,29 @@ namespace BloodPlus
             Grid.SetColumnSpan(cardBg, 3);
             itemContainer.Children.Add(cardBg);
 
+            
+
             List<Label> itemData = new List<Label>
             {
                 new Label{
                     Name = "nama",
-                    Content = nama,
+                    Content = resp.GetValue().Value<string>("nama_donor"),
                     VerticalAlignment = VerticalAlignment.Center,
                     HorizontalAlignment = HorizontalAlignment.Center
                 },
                 new Label{
                     Name = "tipeDarah",
-                    Content = tipeDarah,
+                    Content = resp.GetValue().Value<string>("bloodType"),
                     VerticalAlignment = VerticalAlignment.Center,
                     HorizontalAlignment = HorizontalAlignment.Center
                 }
             };
+
+            itemContainer.Children.Add(new Label {
+                Name = "id",
+                Content = resp.GetValue().Value<string>("nomor_telepon_donor"),
+                Visibility = Visibility.Hidden
+            });
 
             for (int i = 0; i < itemData.Count; i++)
             {
@@ -93,6 +116,8 @@ namespace BloodPlus
             Grid.SetColumn(doneButton, 2);
             doneButton.Click += (sender, e) =>
             {
+                //MessageBox.Show(resp.GetValue().Value<string>("nomor_telepon_donor"));
+                sendEventDone(JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(resp.ToString())[0], response => Console.WriteLine(response.ToString()));
                 donorList.Children.Remove(doneButton.Parent as UIElement);
             };
 

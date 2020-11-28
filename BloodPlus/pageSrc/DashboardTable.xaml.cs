@@ -24,9 +24,14 @@ namespace BloodPlus.pageSrc
         {
             InitializeComponent();
             theList.Children.Clear();
-            addToTable("22-11-2020", "RS TEST");
-            addToTable("22-11-2020", "RS TEST");
-            addToTable("22-11-2020", "RS TEST");
+            //addToTable("22-11-2020", "RS TEST");
+            //addToTable("22-11-2020", "RS TEST");
+            //addToTable("22-11-2020", "RS TEST");
+        }
+
+        public void clearTable()
+        {
+            theList.Children.Clear();
         }
 
         public void addToTable(string date, string responder)

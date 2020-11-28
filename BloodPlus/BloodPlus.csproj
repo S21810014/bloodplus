@@ -134,6 +134,9 @@
     <Compile Include="devPageTester.xaml.cs">
       <DependentUpon>devPageTester.xaml</DependentUpon>
     </Compile>
+    <Compile Include="pageSrc\donorNotificationWindow.xaml.cs">
+      <DependentUpon>donorNotificationWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="pageSrc\currentDonorPage.xaml.cs">
       <DependentUpon>currentDonorPage.xaml</DependentUpon>
     </Compile>
@@ -169,6 +172,10 @@
     </Compile>
     <Compile Include="utils.cs" />
     <Page Include="devPageTester.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="pageSrc\donorNotificationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

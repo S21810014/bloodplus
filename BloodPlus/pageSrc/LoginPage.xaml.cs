@@ -91,7 +91,12 @@ namespace BloodPlus.pageSrc
                     }
                     else
                     {
-                        MessageBox.Show("[DEVMODE] " + resp["resp"] as string);
+                        //MessageBox.Show("[DEVMODE] " + resp["resp"] as string);
+                        Dispatcher.BeginInvoke(new Action(() => {
+                            mBox invalidMsgBox = new mBox("Password/Username invalid", 300, 200);
+                            invalidMsgBox.Show();
+                        }));
+                        
                     }
                 }
             );
@@ -174,7 +179,8 @@ namespace BloodPlus.pageSrc
                 {
                     if (predicates[i][j](targets[i].Text))
                     {
-                        MessageBox.Show(HintAssist.GetHint(targets[i]).ToString() + " tidak valid");
+                        mBox invalidMsgBox = new mBox(HintAssist.GetHint(targets[i]).ToString() + " tidak valid", 300, 200);
+                        invalidMsgBox.Show();
                         return;
                     }
                 }
@@ -182,7 +188,8 @@ namespace BloodPlus.pageSrc
 
             if (string.IsNullOrWhiteSpace(tboxRegRespPassword.Password))
             {
-                MessageBox.Show(HintAssist.GetHint(tboxRegRespPassword).ToString() + " tidak valid");
+                mBox invalidMsgBox = new mBox(HintAssist.GetHint(tboxRegRespPassword).ToString() + " tidak valid", 300, 200);
+                invalidMsgBox.Show();
                 return;
             }
 
@@ -207,11 +214,13 @@ namespace BloodPlus.pageSrc
 
                     if (resp["resp"] as string == "Already Exist and Ignored")
                     {
-                        MessageBox.Show("Akun dengan nomor telepon tersebut sudah terdaftar");
+                        mBox invalidMsgBox = new mBox("Akun dengan nomor telepon tersebut sudah terdaftar", 300, 200);
+                        invalidMsgBox.Show();
                     }
                     else
                     {
-                        MessageBox.Show("Pendaftaran Berhasil");
+                        mBox invalidMsgBox = new mBox("Pendaftaran Berhasil", 300, 200);
+                        invalidMsgBox.Show();
 
                         Dispatcher.BeginInvoke(new Action(() =>
                         {
@@ -260,7 +269,8 @@ namespace BloodPlus.pageSrc
                 {
                     if (predicates[i][j](targets[i].Text))
                     {
-                        MessageBox.Show(HintAssist.GetHint(targets[i]).ToString() + " tidak valid");
+                        mBox invalidMsgBox = new mBox(HintAssist.GetHint(targets[i]).ToString() + " tidak valid", 300, 200);
+                        invalidMsgBox.Show();
                         return;
                     }
                 }
@@ -268,7 +278,8 @@ namespace BloodPlus.pageSrc
 
             if (string.IsNullOrWhiteSpace(tboxRegPassword.Password))
             {
-                MessageBox.Show(HintAssist.GetHint(tboxRegPassword).ToString() + " tidak valid");
+                mBox invalidMsgBox = new mBox(HintAssist.GetHint(tboxRegPassword).ToString() + " tidak valid", 300, 200);
+                invalidMsgBox.Show();
                 return;
             }
 
@@ -276,7 +287,8 @@ namespace BloodPlus.pageSrc
             {
                 if (cbox.SelectedItem == null)
                 {
-                    MessageBox.Show(HintAssist.GetHint(cbox).ToString() + " tidak valid");
+                    mBox invalidMsgBox = new mBox(HintAssist.GetHint(cbox).ToString() + " tidak valid", 300, 200);
+                    invalidMsgBox.Show();
                     return;
                 }
             }
@@ -298,11 +310,13 @@ namespace BloodPlus.pageSrc
 
                     if (resp["resp"] as string == "Already Exist and Ignored")
                     {
-                        MessageBox.Show("Akun dengan nomor telepon tersebut sudah terdaftar");
+                        mBox invalidMsgBox = new mBox("Akun dengan nomor telepon tersebut sudah terdaftar", 300, 200);
+                        invalidMsgBox.Show();
                     }
                     else
                     {
-                        MessageBox.Show("Pendaftaran Berhasil");
+                        mBox invalidMsgBox = new mBox("Pendaftaran Berhasil", 300, 200);
+                        invalidMsgBox.Show();
 
                         Dispatcher.BeginInvoke(new Action(() =>
                         {

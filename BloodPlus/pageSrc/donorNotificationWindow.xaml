@@ -1,0 +1,113 @@
+﻿<Window x:Class="BloodPlus.donorNotificationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BloodPlus"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+                TextElement.FontWeight="Regular"
+                TextElement.FontSize="13"
+                TextOptions.TextFormattingMode="Ideal" 
+                TextOptions.TextRenderingMode="Auto"        
+                FontFamily="{DynamicResource MaterialDesignFont}"
+        mc:Ignorable="d"
+        Title="mBox" Height="444" Width="446" AllowsTransparency="True" Background="Transparent" WindowStyle="None">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Card.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.DialogHost.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <materialDesign:Card UniformCornerRadius="9" Margin="8">
+        <Grid>
+            <Image Source="/BloodPlus;component/assets/mobileBlood.png" Margin="192,-210,-197,195"/>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="80"/>
+                </Grid.RowDefinitions>
+
+                <Frame MouseMove="titleDrag"/>
+                <Label Content="Blood Suppy Required" VerticalAlignment="Center" FontSize="24" Margin="15,0,0,0"/>
+
+                <materialDesign:Card Grid.Row="1" Margin="16,8,16,8" UniformCornerRadius="9" materialDesign:ShadowAssist.ShadowDepth="Depth0" Background="#FFECECEC">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <materialDesign:Card Margin="8" UniformCornerRadius="18" materialDesign:ShadowAssist.ShadowDepth="Depth0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.3*"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Content="Responder:" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" Opacity="0.5"/>
+                                <Label x:Name="labelResponder" Content="WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="14" Grid.Column="1" Margin="0,0,8,0"/>
+                            </Grid>
+                        </materialDesign:Card>
+
+
+                        <materialDesign:Card Margin="8" UniformCornerRadius="18" materialDesign:ShadowAssist.ShadowDepth="Depth0" Grid.Row="1">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.3*"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Content="Address:" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" Opacity="0.5"/>
+                                <Label x:Name="labelAddress" Content="WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="14" Grid.Column="1" Margin="0,0,8,0"/>
+                            </Grid>
+                        </materialDesign:Card>
+
+                        <materialDesign:Card Margin="8" UniformCornerRadius="18" materialDesign:ShadowAssist.ShadowDepth="Depth0" Grid.Row="2">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.3*"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Content="Blood Type:" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" Opacity="0.5"/>
+                                <Label x:Name="labelBloodType" Content="WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="14" Grid.Column="1" Margin="0,0,8,0"/>
+                            </Grid>
+                        </materialDesign:Card>
+                    </Grid>
+                </materialDesign:Card>
+
+                <Grid Grid.Row="2" Margin="35,0,35,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button BorderBrush="{x:Null}" 
+                            Background="#FFFF6969"  
+                            materialDesign:ShadowAssist.ShadowDepth="Depth0" materialDesign:ButtonAssist.CornerRadius="15"
+                            Height="55" Margin="8" Grid.Column="0" Click="volunteerClick">
+                        <Label Content="Volunteer" Opacity="0.85" FontSize="20" Foreground="White"/>
+                    </Button>
+
+                    <Button BorderBrush="{x:Null}" 
+                            Background="White"  
+                            materialDesign:ShadowAssist.ShadowDepth="Depth2" materialDesign:ButtonAssist.CornerRadius="15"
+                            Height="55" Margin="8" Grid.Column="1" Click="passClick">
+                        <Label Content="Pass" Opacity="0.65" FontSize="20"/>
+                    </Button>
+                    
+                </Grid>
+
+            </Grid>
+        </Grid>
+    </materialDesign:Card>
+</Window>
