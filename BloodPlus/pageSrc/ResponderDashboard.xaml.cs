@@ -1,4 +1,5 @@
 ﻿using MaterialDesignThemes.Wpf;
+using Newtonsoft.Json;
 using SocketIOClient;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,8 @@ namespace BloodPlus.pageSrc
         currentDonorPage cdonorPage;
         Action<string> changeParentPanel;
         Action<string, Action<SocketIOResponse>> sendRequestLatestDonor;
-        
+        Action<string, Action<string>> sendNotifyDonor;
+        Dictionary<string, object> userData;
 
         public ResponderDashboard(
             Action<string> changeParentPanel,
@@ -33,11 +35,14 @@ namespace BloodPlus.pageSrc
             Action<Dictionary<string, object>,Action<SocketIOResponse>> sendEventDone,
             Action<string, Action<SocketIOResponse>> sendRequestLatestDonor,
             Dictionary<string, object> userData,
-            List<Action<SocketIOResponse>> latestDonorListener)
+            List<Action<SocketIOResponse>> latestDonorListener,
+            Action<string, Action<string>> sendNotifyDonor)
         {
             InitializeComponent();
             this.changeParentPanel = changeParentPanel;
             this.sendRequestLatestDonor = sendRequestLatestDonor;
+            this.sendNotifyDonor = sendNotifyDonor;
+            this.userData = userData;
 
             cdonorPage = new currentDonorPage(changePanel, currentDonorListener, sendEventDone);
             container.Children.Add(cdonorPage);
@@ -59,7 +64,7 @@ namespace BloodPlus.pageSrc
                         test.ForEach(el => addToLatestDonorList(
                             el.ToObject<Dictionary<string, object>>()["nama"].ToString(),
                             el.ToObject<Dictionary<string, object>>()["tipe_darah"].ToString(),
-                            el.ToObject<Dictionary<string, object>>()["tanggal"].ToString()
+                            el.ToObject<Dictionary<string, object>>()["id"].ToString()
                         ));
                     }));
                 });
@@ -73,7 +78,7 @@ namespace BloodPlus.pageSrc
                         test.ForEach(el => addToLatestDonorList(
                             el.ToObject<Dictionary<string, object>>()["nama"].ToString(),
                             el.ToObject<Dictionary<string, object>>()["tipe_darah"].ToString(),
-                            el.ToObject<Dictionary<string, object>>()["tanggal"].ToString()
+                            el.ToObject<Dictionary<string, object>>()["id"].ToString()
                         ));
                     }));
                 });
@@ -163,7 +168,24 @@ namespace BloodPlus.pageSrc
             Grid.SetColumn(contactButton, 2);
             contactButton.Click += (sender, e) =>
             {
-                MessageBox.Show(id);
+                sendNotifyDonor(
+                    JsonConvert.SerializeObject(new Dictionary<string, object> {
+                        {"bloodType", bloodType },
+                        {"responder", userData["nama"] },
+                        {"alamat", userData["alamat"] },
+                        {"id_responder", userData["id"] },
+                        {"id_donor", id }
+                    }),
+                    response =>
+                    {
+                        //MessageBox.Show(response);
+                        Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            mBox invalidMsgBox = new mBox("Pendonor sedang merespon di responder lain", 500, 300);
+                            invalidMsgBox.Show();
+                        }));
+                    }
+                );
             };
 
             itemContainer.Children.Add(contactButton);

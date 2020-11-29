@@ -213,7 +213,7 @@ namespace BloodPlus
                                 navs.MouseDown += upperNavClick;
                             }
 
-                            panels["Dashboard"] = new pageSrc.ResponderDashboard(changePanel, currentDonorListener, sendEventDone, sendRequestLatestDonor, userData, latestDonorListener);
+                            panels["Dashboard"] = new pageSrc.ResponderDashboard(changePanel, currentDonorListener, sendEventDone, sendRequestLatestDonor, userData, latestDonorListener, sendNotifDonor);
                             panels["Notify Donors"] = new pageSrc.ResponderNotifyDonor(sendNotifDonor, userData);
                             changePanel("Dashboard");
 
@@ -495,6 +495,12 @@ namespace BloodPlus
                 else
                     nav.Value.FontWeight = FontWeights.Bold;
             }
+        }
+
+        private void windowClose(object sender, EventArgs e)
+        {
+            if(userData.ContainsKey("id"))
+                sendLogout();
         }
     }
 

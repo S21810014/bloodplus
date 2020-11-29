@@ -45,7 +45,7 @@ namespace BloodPlus.pageSrc
                     }),
                     response =>
                     {
-                        MessageBox.Show(response);
+                        //MessageBox.Show(response);
                     }
                 );
             }
