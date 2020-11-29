@@ -386,6 +386,11 @@ namespace BloodPlus
         {
             await socket.EmitAsync("requestHistoryTable", response => callback(response), idPengguna);
         }
+
+        private async void sendRequestLatestDonor(string idResponder, Action<SocketIOResponse> callback)
+        {
+            await socket.EmitAsync("requestLatestDonor", response => callback(response), idResponder);
+        }
         #endregion
 
         /// <summary>
