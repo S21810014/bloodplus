@@ -212,7 +212,7 @@ namespace BloodPlus
                                 navs.MouseDown += upperNavClick;
                             }
 
-                            panels["Dashboard"] = new pageSrc.ResponderDashboard(changePanel, currentDonorListener, sendEventDone);
+                            panels["Dashboard"] = new pageSrc.ResponderDashboard(changePanel, currentDonorListener, sendEventDone, sendRequestLatestDonor);
                             panels["Notify Donors"] = new pageSrc.ResponderNotifyDonor(sendNotifDonor, userData);
                             changePanel("Dashboard");
 

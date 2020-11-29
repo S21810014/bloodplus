@@ -24,15 +24,17 @@ namespace BloodPlus.pageSrc
     {
         currentDonorPage cdonorPage;
         Action<string> changeParentPanel;
+        Action<SocketIOResponse> sendRequestLatestDonor;
 
         public ResponderDashboard(
             Action<string> changeParentPanel,
             List<Action<SocketIOResponse>> currentDonorListener,
-            Action<Dictionary<string, object>,
-            Action<SocketIOResponse>> sendEventDone)
+            Action<Dictionary<string, object>,Action<SocketIOResponse>> sendEventDone,
+            Action<SocketIOResponse> sendRequestLatestDonor)
         {
             InitializeComponent();
             this.changeParentPanel = changeParentPanel;
+            this.sendRequestLatestDonor = sendRequestLatestDonor;
 
             cdonorPage = new currentDonorPage(changePanel, currentDonorListener, sendEventDone);
             container.Children.Add(cdonorPage);
