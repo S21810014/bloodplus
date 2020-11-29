@@ -50,6 +50,7 @@ namespace BloodPlus
 
         #region for responder
         List<Action<SocketIOResponse>> currentDonorListener = new List<Action<SocketIOResponse>>();
+        List<Action<SocketIOResponse>> latestDonorListener = new List<Action<SocketIOResponse>>();
         #endregion
 
         #region for donor
@@ -212,16 +213,24 @@ namespace BloodPlus
                                 navs.MouseDown += upperNavClick;
                             }
 
-                            panels["Dashboard"] = new pageSrc.ResponderDashboard(changePanel, currentDonorListener, sendEventDone, sendRequestLatestDonor);
+                            panels["Dashboard"] = new pageSrc.ResponderDashboard(changePanel, currentDonorListener, sendEventDone, sendRequestLatestDonor, userData, latestDonorListener);
                             panels["Notify Donors"] = new pageSrc.ResponderNotifyDonor(sendNotifDonor, userData);
                             changePanel("Dashboard");
 
-                            //only add this event handler if it's responder whos logged in
+                            //only add these event handlers if it's responder whos logged in
                             socket.On("responderAcknowledge", rsp =>
                             {
                                 //this will be sent to table on responder 'current donor'
-                                // will add another later
                                 foreach (Action<SocketIOResponse> a in currentDonorListener)
+                                {
+                                    a(rsp);
+                                }
+                            });
+
+                            socket.On("updateLatestDonorTable", rsp =>
+                            {
+                                //this will be sent to table on responder 'latest donor'
+                                foreach(Action<SocketIOResponse> a in latestDonorListener)
                                 {
                                     a(rsp);
                                 }

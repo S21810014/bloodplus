@@ -25,7 +25,6 @@ namespace BloodPlus
     public partial class currentDonorPage : UserControl
     {
         Action<string> changePanel;
-        List<Action<SocketIOResponse>> currentDonorListener;
         Action<Dictionary<string, object>, Action<SocketIOResponse>> sendEventDone;
 
         public currentDonorPage(Action<string> changePanel, List<Action<SocketIOResponse>> currentDonorListener, Action<Dictionary<string, object>, Action<SocketIOResponse>> sendEventDone)

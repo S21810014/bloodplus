@@ -24,13 +24,16 @@ namespace BloodPlus.pageSrc
     {
         currentDonorPage cdonorPage;
         Action<string> changeParentPanel;
-        Action<SocketIOResponse> sendRequestLatestDonor;
+        Action<string, Action<SocketIOResponse>> sendRequestLatestDonor;
+        
 
         public ResponderDashboard(
             Action<string> changeParentPanel,
             List<Action<SocketIOResponse>> currentDonorListener,
             Action<Dictionary<string, object>,Action<SocketIOResponse>> sendEventDone,
-            Action<SocketIOResponse> sendRequestLatestDonor)
+            Action<string, Action<SocketIOResponse>> sendRequestLatestDonor,
+            Dictionary<string, object> userData,
+            List<Action<SocketIOResponse>> latestDonorListener)
         {
             InitializeComponent();
             this.changeParentPanel = changeParentPanel;
@@ -41,9 +44,40 @@ namespace BloodPlus.pageSrc
             cdonorPage.Visibility = Visibility.Hidden;
 
             latestDonorList.Children.Clear();
-            addToLatestDonorList("CODECODECODECODECODECODECODECODECODE", "WAW");
-            addToLatestDonorList("CODECODECODECODECODECODECODECODECODE", "WAW");
-            addToLatestDonorList("CODECODECODECODECODECODECODECODECODE", "WAW");
+            //addToLatestDonorList("CODECODECODECODECODECODECODECODECODE", "WAW");
+            //addToLatestDonorList("CODECODECODECODECODECODECODECODECODE", "WAW");
+            //addToLatestDonorList("CODECODECODECODECODECODECODECODECODE", "WAW");
+
+            Loaded += (sender, e) =>
+            {
+                latestDonorListener.Add(response =>
+                {
+                    var test = response.GetValue().ToList();
+                    Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        latestDonorList.Children.Clear();
+                        test.ForEach(el => addToLatestDonorList(
+                            el.ToObject<Dictionary<string, object>>()["nama"].ToString(),
+                            el.ToObject<Dictionary<string, object>>()["tipe_darah"].ToString(),
+                            el.ToObject<Dictionary<string, object>>()["tanggal"].ToString()
+                        ));
+                    }));
+                });
+
+                sendRequestLatestDonor(userData["id"].ToString(), response =>
+                {
+                    var test = response.GetValue().ToList();
+                    Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        latestDonorList.Children.Clear();
+                        test.ForEach(el => addToLatestDonorList(
+                            el.ToObject<Dictionary<string, object>>()["nama"].ToString(),
+                            el.ToObject<Dictionary<string, object>>()["tipe_darah"].ToString(),
+                            el.ToObject<Dictionary<string, object>>()["tanggal"].ToString()
+                        ));
+                    }));
+                });
+            };
         }
 
         private void changePanel(string panelName)
@@ -65,7 +99,7 @@ namespace BloodPlus.pageSrc
             changePanel("Current Donor");
         }
 
-        private void addToLatestDonorList(string name, string bloodType)
+        private void addToLatestDonorList(string name, string bloodType, string id)
         {
             Grid itemContainer = new Grid()
             {
@@ -98,6 +132,15 @@ namespace BloodPlus.pageSrc
                 }
             };
 
+            Label usrId = new Label
+            {
+                Name = "usrID",
+                Content = id,
+                Visibility = Visibility.Hidden
+            };
+
+            itemContainer.Children.Add(usrId);
+
             for (int i = 0; i < itemData.Count; i++)
             {
                 Grid.SetColumn(itemData[i], i);
@@ -120,7 +163,7 @@ namespace BloodPlus.pageSrc
             Grid.SetColumn(contactButton, 2);
             contactButton.Click += (sender, e) =>
             {
-                //add contact donor code here
+                MessageBox.Show(id);
             };
 
             itemContainer.Children.Add(contactButton);
