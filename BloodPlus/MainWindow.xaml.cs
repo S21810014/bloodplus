@@ -54,6 +54,7 @@ namespace BloodPlus
 
         #region for donor
         List<Action<SocketIOResponse>> donorHistoryListener = new List<Action<SocketIOResponse>>();
+        List<Action<SocketIOResponse>> donorProfilePicListener = new List<Action<SocketIOResponse>>();
         #endregion
 
         public MainWindow()
@@ -78,6 +79,16 @@ namespace BloodPlus
             {
                 SocketIO sock = s as SocketIO;
 
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    connectedCard.Visibility = Visibility.Visible;
+                    labelConnStatus.Content = "Srv Connected";
+
+                    //MessageBox.Show("Connected");
+                    Task.Delay(1500).ContinueWith((resp) => Dispatcher.BeginInvoke(new Action(() => connectedCard.Visibility = Visibility.Hidden)));
+                    //MessageBox.Show("hold on");
+                }));
+
                 sock.On("donorNotify", response =>
                 {
                     Action<SocketIOResponse> acknowledgeNotif = async (rsp) =>
@@ -87,7 +98,7 @@ namespace BloodPlus
                         r["nama_donor"] = userData["nama"];
                         r["donorSocketId"] = sock.Id;
                         r["status"] = "inprogress";
-                        r["tanggal"] = DateTime.Now.ToString();
+                        r["tanggal"] = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                         r["nomor_telepon_donor"] = userData["nomor_telepon"];
 
                         await sock.EmitAsync("acknowledgeEvent", r);
@@ -110,7 +121,20 @@ namespace BloodPlus
                     }));
                 });
 
-                MessageBox.Show("Connected to server");
+                //MessageBox.Show("Connected to server");
+            };
+
+            socket.OnReconnecting += (s, evt) =>
+            {
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    connectedCard.Visibility = Visibility.Visible;
+                    labelConnStatus.Content = "Srv Reconnecting";
+
+                    //MessageBox.Show("Connected");
+                    //Task.Delay(1500).ContinueWith((resp) => Dispatcher.BeginInvoke(new Action(() => connectedCard.Visibility = Visibility.Hidden)));
+                    //MessageBox.Show("hold on");
+                }));
             };
 
             try
@@ -126,7 +150,6 @@ namespace BloodPlus
             userData = new Dictionary<string, object>();
 
             panels.Add("Login", new pageSrc.LoginPage(changePanel, sendLogin, sendRegister));
-            panels.Add("History", new pageSrc.HistoryPage());
             changePanel("Login");
         }
 
@@ -258,6 +281,14 @@ namespace BloodPlus
                                     a(rsp);
                                 }
                             });
+
+                            socket.On("profileJpegUpdate", rsp =>
+                            {
+                                foreach (Action<SocketIOResponse> a in donorProfilePicListener)
+                                {
+                                    a(rsp);
+                                }
+                            });
                         }
                         #endregion
                     }));
@@ -278,8 +309,9 @@ namespace BloodPlus
 
                             Dispatcher.BeginInvoke(new Action(() =>
                             {
-                                panels["Profile"] = new pageSrc.ProfilePage(resp, sendProfileJpeg);
-                                panels["Dashboard"] = new pageSrc.Dashboard(changePanel, resp, sendRequestHistoryTable, donorHistoryListener);
+                                panels["Profile"] = new pageSrc.ProfilePage(resp, sendProfileJpeg, donorProfilePicListener);
+                                panels["Dashboard"] = new pageSrc.Dashboard(changePanel, resp, sendRequestHistoryTable, donorHistoryListener, donorProfilePicListener);
+                                panels["History"] = new pageSrc.HistoryPage(donorHistoryListener, sendRequestHistoryTable, userData);
                                 changePanel("Dashboard");
                             }));
                         }, new { phoneNumber = userData["nomor_telepon"] });

@@ -24,17 +24,20 @@ namespace BloodPlus.pageSrc
     {
         Action<string> changePanel;
         Action<string, Action<SocketIOResponse>> sendRequestHistoryTable;
+        List<Action<SocketIOResponse>> donorProfilePicListener;
 
         public Dashboard(
-            Action<string> changePanel, 
+            Action<string> changePanel,
             Dictionary<string, object> userData,
             Action<string, Action<SocketIOResponse>> sendRequestHistoryTable,
-            List<Action<SocketIOResponse>> donorHistoryListener)
+            List<Action<SocketIOResponse>> donorHistoryListener,
+            List<Action<SocketIOResponse>> donorProfilePicListener)
         {
             InitializeComponent();
 
             this.changePanel = changePanel;
             this.sendRequestHistoryTable = sendRequestHistoryTable;
+            this.donorProfilePicListener = donorProfilePicListener;
 
             txtName.Content = userData["nama"] as string;
             txtBloodType.Content = userData["tipe_darah"] as string;

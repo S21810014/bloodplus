@@ -92,11 +92,12 @@ namespace BloodPlus.pageSrc
                     else
                     {
                         //MessageBox.Show("[DEVMODE] " + resp["resp"] as string);
-                        Dispatcher.BeginInvoke(new Action(() => {
+                        Dispatcher.BeginInvoke(new Action(() =>
+                        {
                             mBox invalidMsgBox = new mBox("Password/Username invalid", 300, 200);
                             invalidMsgBox.Show();
                         }));
-                        
+
                     }
                 }
             );
@@ -193,13 +194,6 @@ namespace BloodPlus.pageSrc
                 return;
             }
 
-            MessageBox.Show(
-                tboxRegRespNama.Text + "\n" +
-                tboxRegRespAlamat.Text + "\n" +
-                tboxRegRespNomorTelepon.Text + "\n" +
-                tboxRegRespPassword.Password + "\n"
-            );
-
             registerData["responder"] = "RESPONDER";
             registerData["nama"] = tboxRegRespNama.Text;
             registerData["alamat"] = tboxRegRespAlamat.Text;
@@ -214,16 +208,19 @@ namespace BloodPlus.pageSrc
 
                     if (resp["resp"] as string == "Already Exist and Ignored")
                     {
-                        mBox invalidMsgBox = new mBox("Akun dengan nomor telepon tersebut sudah terdaftar", 300, 200);
-                        invalidMsgBox.Show();
+                        Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            mBox invalidMsgBox = new mBox("Akun dengan nomor telepon tersebut sudah terdaftar", 300, 200);
+                            invalidMsgBox.Show();
+                        }));
                     }
                     else
                     {
-                        mBox invalidMsgBox = new mBox("Pendaftaran Berhasil", 300, 200);
-                        invalidMsgBox.Show();
-
                         Dispatcher.BeginInvoke(new Action(() =>
                         {
+                            mBox invalidMsgBox = new mBox("Pendaftaran Berhasil", 300, 200);
+                            invalidMsgBox.Show();
+
                             registerData.Clear();
                             tboxRegRespNama.Text = "";
                             tboxRegRespAlamat.Text = "";
@@ -310,16 +307,19 @@ namespace BloodPlus.pageSrc
 
                     if (resp["resp"] as string == "Already Exist and Ignored")
                     {
-                        mBox invalidMsgBox = new mBox("Akun dengan nomor telepon tersebut sudah terdaftar", 300, 200);
-                        invalidMsgBox.Show();
+                        Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            mBox invalidMsgBox = new mBox("Akun dengan nomor telepon tersebut sudah terdaftar", 300, 200);
+                            invalidMsgBox.Show();
+                        }));
                     }
                     else
                     {
-                        mBox invalidMsgBox = new mBox("Pendaftaran Berhasil", 300, 200);
-                        invalidMsgBox.Show();
-
                         Dispatcher.BeginInvoke(new Action(() =>
                         {
+                            mBox invalidMsgBox = new mBox("Pendaftaran Berhasil", 300, 200);
+                            invalidMsgBox.Show();
+
                             registerData.Clear();
                             tboxRegNama.Text = "";
                             tboxRegUmur.Text = "";
@@ -334,17 +334,6 @@ namespace BloodPlus.pageSrc
                     }
                 }
             );
-            //MessageBox.Show(
-            //    tboxRegNama.Text + "\n" +
-            //    tboxRegAlamat.Text + "\n" +
-            //    tboxRegUmur.Text + "\n" +
-            //    (tboxRegGolDar.SelectedItem as ComboBoxItem).Content.ToString() + "\n" +
-            //    (tboxRegJenisKelamin.SelectedItem as ComboBoxItem).Content.ToString() + "\n" +
-            //    tboxRegNomorTelepon.Text + "\n" +
-            //    tboxRegTinggiBadan.Text + "\n" +
-            //    tboxRegBeratBadan.Text + "\n" +
-            //    tboxRegPassword.Password + "\n"
-            //);
         }
 
         private void goToResponderLoginClick(object sender, MouseButtonEventArgs e)

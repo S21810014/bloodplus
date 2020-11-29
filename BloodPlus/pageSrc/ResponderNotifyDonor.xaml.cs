@@ -34,18 +34,26 @@ namespace BloodPlus.pageSrc
 
         private void btnSendNotificationClick(object sender, RoutedEventArgs e)
         {
-            sendNotifyDonor(
-                JsonConvert.SerializeObject(new Dictionary<string, object> {
-                    {"bloodType", (cboxBloodType.SelectedItem as ComboBoxItem).Content },
-                    {"responder", userData["nama"] },
-                    {"alamat", userData["alamat"] },
-                    {"id_responder", userData["id"] }
-                }),
-                response =>
-                {
-                    MessageBox.Show(response);
-                }
-            );
+            if(cboxBloodType.SelectedItem != null)
+            {
+                sendNotifyDonor(
+                    JsonConvert.SerializeObject(new Dictionary<string, object> {
+                        {"bloodType", (cboxBloodType.SelectedItem as ComboBoxItem).Content },
+                        {"responder", userData["nama"] },
+                        {"alamat", userData["alamat"] },
+                        {"id_responder", userData["id"] }
+                    }),
+                    response =>
+                    {
+                        MessageBox.Show(response);
+                    }
+                );
+            }
+            else
+            {
+                mBox invalidMsgBox = new mBox("Masukkan tipe darah", 300, 200);
+                invalidMsgBox.Show();
+            }
         }
     }
 }

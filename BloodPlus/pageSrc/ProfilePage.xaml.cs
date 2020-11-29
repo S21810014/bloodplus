@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SocketIOClient;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,12 +23,14 @@ namespace BloodPlus.pageSrc
     public partial class ProfilePage : UserControl
     {
         Action<object, Action<string>> sendProfileJpeg;
+        List<Action<SocketIOResponse>> donorProfilePicListener;
 
-        public ProfilePage(Dictionary<string, object> userData, Action<object, Action<string>> sendProfileJpeg)
+        public ProfilePage(Dictionary<string, object> userData, Action<object, Action<string>> sendProfileJpeg, List<Action<SocketIOResponse>> donorProfilePicListener)
         {
             InitializeComponent();
 
             this.sendProfileJpeg = sendProfileJpeg;
+            this.donorProfilePicListener = donorProfilePicListener;
 
             txtName.Content = userData["nama"] as string;
             txtAddress.Content = userData["alamat"] as string;
@@ -48,6 +51,24 @@ namespace BloodPlus.pageSrc
 
                 imgProfile.Source = bm;
             }
+
+            donorProfilePicListener.Add(response =>
+            {
+                userData["profilePic"] = response.GetValue().ToString();
+
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    MemoryStream ms = new MemoryStream(Convert.FromBase64String(userData["profilePic"] as string));
+
+                    BitmapImage bm = new BitmapImage();
+
+                    bm.BeginInit();
+                    bm.StreamSource = ms;
+                    bm.EndInit();
+
+                    imgProfile.Source = bm;
+                }));
+            });
         }
 
         private void changeProfilePictureClick(object sender, MouseButtonEventArgs e)

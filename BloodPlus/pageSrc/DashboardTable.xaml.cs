@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SocketIOClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,10 +24,12 @@ namespace BloodPlus.pageSrc
         public DashboardTable()
         {
             InitializeComponent();
-            theList.Children.Clear();
+            clearTable();
+
             //addToTable("22-11-2020", "RS TEST");
             //addToTable("22-11-2020", "RS TEST");
             //addToTable("22-11-2020", "RS TEST");
+
         }
 
         public void clearTable()

@@ -25,7 +25,11 @@ namespace BloodPlus.pageSrc
         currentDonorPage cdonorPage;
         Action<string> changeParentPanel;
 
-        public ResponderDashboard(Action<string> changeParentPanel, List<Action<SocketIOResponse>> currentDonorListener, Action<Dictionary<string, object>, Action<SocketIOResponse>> sendEventDone)
+        public ResponderDashboard(
+            Action<string> changeParentPanel,
+            List<Action<SocketIOResponse>> currentDonorListener,
+            Action<Dictionary<string, object>,
+            Action<SocketIOResponse>> sendEventDone)
         {
             InitializeComponent();
             this.changeParentPanel = changeParentPanel;
@@ -46,7 +50,8 @@ namespace BloodPlus.pageSrc
             {
                 dashboardPage.Visibility = Visibility.Visible;
                 cdonorPage.Visibility = Visibility.Hidden;
-            } else if(panelName == "Current Donor")
+            }
+            else if (panelName == "Current Donor")
             {
                 dashboardPage.Visibility = Visibility.Hidden;
                 cdonorPage.Visibility = Visibility.Visible;
@@ -105,7 +110,7 @@ namespace BloodPlus.pageSrc
                     Foreground = new SolidColorBrush(Colors.Black),
                     Opacity = 0.5
                 },
-                Margin = new Thickness(25,0,25,0),
+                Margin = new Thickness(25, 0, 25, 0),
                 Background = new SolidColorBrush(Color.FromRgb(255, 161, 161)),
                 BorderBrush = new SolidColorBrush(Colors.Transparent)
             };

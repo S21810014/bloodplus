@@ -1,4 +1,5 @@
 ﻿using MaterialDesignThemes.Wpf;
+using SocketIOClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,16 +22,49 @@ namespace BloodPlus.pageSrc
     /// </summary>
     public partial class HistoryPage : UserControl
     {
-        public HistoryPage()
+        List<Action<SocketIOResponse>> donorHistoryListener;
+        Action<string, Action<SocketIOResponse>> sendRequestHistoryTable;
+
+        public HistoryPage(List<Action<SocketIOResponse>> donorHistoryListener, Action<string, Action<SocketIOResponse>> sendRequestHistoryTable, Dictionary<string, object> userData)
         {
             InitializeComponent();
 
-            historyList.Children.Clear();
-            
-            for(int i=0; i<10; i++)
+            this.donorHistoryListener = donorHistoryListener;
+            this.sendRequestHistoryTable = sendRequestHistoryTable;
+            clearList();
+
+            donorHistoryListener.Add(response =>
             {
-                addToList("RS TEST " + (i + 1), "Street, City, Country", "22-11-2020");
-            }
+                var test = response.GetValue().ToList();
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    clearList();
+                    test.ForEach(el => addToList(
+                        el.ToObject<Dictionary<string, object>>()["nama"].ToString(),
+                        el.ToObject<Dictionary<string, object>>()["alamat"].ToString(),
+                        el.ToObject<Dictionary<string, object>>()["tanggal"].ToString()
+                    ));
+                }));
+            });
+
+            sendRequestHistoryTable(userData["id"].ToString(), response =>
+            {
+                var test = response.GetValue().ToList();
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    clearList();
+                    test.ForEach(el => addToList(
+                        el.ToObject<Dictionary<string, object>>()["nama"].ToString(),
+                        el.ToObject<Dictionary<string, object>>()["alamat"].ToString(),
+                        el.ToObject<Dictionary<string, object>>()["tanggal"].ToString()
+                    ));
+                }));
+            });
+        }
+
+        public void clearList()
+        {
+            historyList.Children.Clear();
         }
 
         public void addToList(string responder, string address, string date)
